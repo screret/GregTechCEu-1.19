@@ -40,6 +40,7 @@ public class CommonProxy {
         MaterialIconType.init();
         GTMaterials.init();
         TagPrefix.init();
+        GTSatellites.init();
         GTSoundEntries.init();
         GTCovers.init();
         GTFluids.init();
@@ -48,6 +49,7 @@ public class CommonProxy {
         GTRecipeTypes.init();
         GTMachines.init();
         GTFoods.init();
+        GTEntityTypes.init();
         GTItems.init();
         GregTechDatagen.init();
 

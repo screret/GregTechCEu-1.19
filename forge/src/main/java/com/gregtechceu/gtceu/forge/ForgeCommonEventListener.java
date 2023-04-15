@@ -3,16 +3,24 @@ package com.gregtechceu.gtceu.forge;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.capability.forge.compat.EUToFEProvider;
+import com.gregtechceu.gtceu.api.capability.forge.GTCapability;
 import com.gregtechceu.gtceu.api.item.forge.ComponentItemImpl;
 import com.gregtechceu.gtceu.api.item.forge.DrumMachineItemImpl;
 import com.gregtechceu.gtceu.api.machine.feature.IInteractedMachine;
+import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
+import com.gregtechceu.gtceu.api.satellite.capability.SatelliteHolder;
 import com.gregtechceu.gtceu.common.ServerCommands;
 import com.gregtechceu.gtceu.data.loader.forge.OreDataLoaderImpl;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -79,5 +87,28 @@ public class ForgeCommonEventListener {
     @SubscribeEvent
     public static void attachCapabilities(AttachCapabilitiesEvent<BlockEntity> event) {
         event.addCapability(GTCEu.id("fe_capability"), new EUToFEProvider(event.getObject()));
+    }
+
+    @SubscribeEvent
+    public static void registerLevelCapabilities(AttachCapabilitiesEvent<Level> event) {
+        if (!event.getObject().dimensionType().hasCeiling()) {
+            var satellites = new SatelliteHolder(event.getObject());
+            event.addCapability(GTCEu.id("satellites"), new ICapabilitySerializable<ListTag>() {
+                @Override
+                public ListTag serializeNBT() {
+                    return satellites.serializeNBT();
+                }
+
+                @Override
+                public void deserializeNBT(ListTag arg) {
+                    satellites.deserializeNBT(arg, event.getObject());
+                }
+
+                @Override
+                public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
+                    return GTCapability.CAPABILITY_SATELLITES.orEmpty(capability, LazyOptional.of(() -> satellites));
+                }
+            });
+        }
     }
 }

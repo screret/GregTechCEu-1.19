@@ -59,6 +59,12 @@ public class GTCapabilityHelper {
 
     @ExpectPlatform
     @Nullable
+    public static ISatelliteHolder getSatellites(Level level) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    @Nullable
     public static IPlatformEnergyStorage getPlatformEnergy(Level level, BlockPos pos, @Nullable Direction side) {
         throw new AssertionError();
     }

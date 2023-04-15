@@ -67,4 +67,9 @@ public class GTCapabilityHelperImpl {
     public static ICleanroomReceiver getCleanroomReceiver(Level level, BlockPos pos, @Nullable Direction side) {
         return GTCapability.CAPABILITY_CLEANROOM_RECEIVER.find(level, pos, side);
     }
+
+    @Nullable
+    public static ISatelliteHolder getSatellites(Level level) {
+        return GTCapability.CAPABILITY_SATELLITES.find(level);
+    }
 }
