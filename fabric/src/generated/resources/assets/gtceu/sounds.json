@@ -242,6 +242,15 @@
     ],
     "subtitle": "gtceu.subtitle.replicator"
   },
+  "rocket": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtceu:rocket"
+      }
+    ],
+    "subtitle": "gtceu.subtitle.rocket"
+  },
   "saw": {
     "sounds": [
       {

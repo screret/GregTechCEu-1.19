@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "gtceu:gps_satellite",
+    "gtceu:laser_satellite",
+    "gtceu:empty_satellite",
+    "gtceu:ore_finder_satellite",
+    "gtceu:dyson_swarm_satellite"
+  ]
+}
