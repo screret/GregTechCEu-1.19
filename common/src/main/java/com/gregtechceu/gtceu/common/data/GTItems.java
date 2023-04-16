@@ -1143,6 +1143,16 @@ public class GTItems {
     public static ItemEntry<ComponentItem> FERTILIZER = REGISTRATE.item("fertilizer", ComponentItem::create).onRegister(attach(new FertilizerBehavior())).register();
     public static ItemEntry<Item> BLACKLIGHT = REGISTRATE.item("blacklight", Item::new).register();
 
+
+    public static ItemEntry<Item> GPS_SATELLITE = REGISTRATE.item("gps_satellite", Item::new).tag(CustomTags.SATELLITES).properties(p -> p.rarity(Rarity.UNCOMMON).stacksTo(16)).register();
+    public static ItemEntry<Item> LASER_SATELLITE = REGISTRATE.item("laser_satellite", Item::new).tag(CustomTags.SATELLITES).properties(p -> p.rarity(Rarity.UNCOMMON).stacksTo(16)).register();
+    public static ItemEntry<Item> EMPTY_SATELLITE = REGISTRATE.item("empty_satellite", Item::new).tag(CustomTags.SATELLITES).properties(p -> p.rarity(Rarity.UNCOMMON).stacksTo(16)).register();
+    public static ItemEntry<Item> ORE_FINDER_SATELLITE = REGISTRATE.item("ore_finder_satellite", Item::new).tag(CustomTags.SATELLITES).properties(p -> p.rarity(Rarity.UNCOMMON).stacksTo(16)).register();
+    public static ItemEntry<Item> DYSON_SWARM_SATELLITE = REGISTRATE.item("dyson_swarm_satellite", Item::new).tag(CustomTags.SATELLITES).properties(p -> p.rarity(Rarity.UNCOMMON).stacksTo(16)).register();
+
+    public static ItemEntry<Item> SATELLITE_ROCKET = REGISTRATE.item("satellite_rocket", Item::new).properties(p -> p.rarity(Rarity.RARE).stacksTo(1).fireResistant()).register();
+
+
     public static void init() {
         generateMaterialItems();
         generateTools();

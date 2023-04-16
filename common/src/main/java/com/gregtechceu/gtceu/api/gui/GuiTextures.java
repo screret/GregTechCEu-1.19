@@ -233,6 +233,7 @@ public class GuiTextures {
     public static final ResourceTexture PROGRESS_BAR_UNLOCK = new ResourceTexture("gtceu:textures/gui/progress_bar/progress_bar_unlock.png");
     public static final ResourceTexture PROGRESS_BAR_UNPACKER = new ResourceTexture("gtceu:textures/gui/progress_bar/progress_bar_unpacker.png");
     public static final ResourceTexture PROGRESS_BAR_WIREMILL = new ResourceTexture("gtceu:textures/gui/progress_bar/progress_bar_wiremill.png");
+    public static final ResourceTexture PROGRESS_BAR_ROCKET = new ResourceTexture("gtceu:textures/gui/progress_bar/progress_bar_rocket.png");
 
     //JEI
     public static final ResourceTexture INFO_ICON = new ResourceTexture("gtceu:textures/gui/widget/information.png");
