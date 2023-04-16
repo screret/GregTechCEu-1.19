@@ -703,8 +703,7 @@ public class GTMachines {
                     Component.translatable("gtceu.machine.electric_blast_furnace.tooltip.3")))
             .additionalDisplay((controller, components) -> {
                 if (controller instanceof CoilWorkableElectricMultiblockMachine coilMachine && controller.isFormed()) {
-                    components.add(Component.translatable("gtceu.multiblock.blast_furnace.max_temperature",
-                            Component.translatable(FormattingUtil.formatNumbers(coilMachine.getCoilType().getCoilTemperature() + 100L * Math.max(0, coilMachine.getTier() - GTValues.MV)) + "K").setStyle(Style.EMPTY.withColor(ChatFormatting.RED))));
+                    components.add(Component.translatable("gtceu.multiblock.blast_furnace.max_temperature",  Component.translatable(FormattingUtil.formatNumbers(coilMachine.getCoilType().getCoilTemperature() + 100L * Math.max(0, coilMachine.getTier() - GTValues.MV)) + "K").setStyle(Style.EMPTY.withColor(ChatFormatting.RED))));
                 }
             })
             .register();
@@ -1256,20 +1255,26 @@ public class GTMachines {
             .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
             .recipeType(GTRecipeTypes.SATELLITE_LAUNCH_SYSTEM_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
-                    .aisle("CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC")
-                    .aisle("CCCCCCCCC", "C       C", "C       C", "C       C", "C       C", "C       C", "C       C", "C       C", "CCCCSCCCC")
-                    .aisle("CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC", "CCCCCCCCC")
-                    .aisleRepeatable(10, 10, "   F F   ", "    F    ", "   F F   ", "         ", "         ", "         ", "         ", "         ", "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   X X   ",  "         ",  "   X X   ",  "         ",  "   X X   ",  "         ",  "   X X   ",  "         ",  "   X X   ",  "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "   XXX   ",  "         ",  "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   #A#   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "    T    ",  "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   A#A   ",  " TTT#TTT ",  " TTT#TTT ",  "  TT#TT  ",  "  TT#TT  ",  "   T#T   ",  "   T#T   ",  "   T#T   ",  "   T#T   ",  "    T    ")
+                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   #A#   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "    T    ",  "         ")
+                    .aisle( "CCCCCCCCC",  "CCCCSCCCC",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ")
                     .where('S', Predicates.controller(blocks(definition.getBlock())))
                     .where('#', Predicates.air())
                     .where(' ', Predicates.any())
-                    .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(6)
+                    .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(160)
                             .or(Predicates.abilities(PartAbility.IMPORT_ITEMS))
                             .or(Predicates.abilities(PartAbility.EXPORT_ITEMS)))
-                    .where('F', blocks(MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.StainlessSteel).get()))
+                    .where('X', blocks(MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.StainlessSteel).get()))
+                    .where('T', blocks(CASING_HSSE_STURDY.get()))
+                    .where('A', blocks(CASING_ROCKET_MOTOR.get()))
                     .build())
-            .renderer(() -> new LargeBoilerRenderer(GTCEu.id("block/casings/solid/machine_casing_bronze_plated_bricks"), BoilerFireboxType.BRONZE_FIREBOX,
-                    GTCEu.id("block/multiblock/steam_oven")))
+            .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
+                    GTCEu.id("block/multiblock/assembly_line"), false)
             .register();
     
     //////////////////////////////////////

@@ -1,0 +1,6 @@
+{
+  "parent": "gtceu:block/cube_all",
+  "textures": {
+    "all": "gtceu:block/casings/rocket/machine_casing_rocket_motor"
+  }
+}

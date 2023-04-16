@@ -365,6 +365,7 @@ public class GTBlocks {
     // todo multiblock tanks
     //WOOD_WALL("wood_wall", GTCEu.id(""));
 
+    public static final BlockEntry<Block> CASING_ROCKET_MOTOR = createCasingBlock("rocket_motor", GTCEu.id("block/variant/rocket_motor"));
 
     // Machine Casings
     public static final BlockEntry<Block> MACHINE_CASING_ULV = createMachineCasingBlock(ULV);
