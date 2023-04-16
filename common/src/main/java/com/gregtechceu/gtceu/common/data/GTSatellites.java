@@ -8,12 +8,7 @@ import com.gregtechceu.gtceu.common.satellite.DysonSwarmSatellite;
 import com.gregtechceu.gtceu.common.satellite.EmptySatellite;
 import com.gregtechceu.gtceu.common.satellite.GpsSatellite;
 import com.gregtechceu.gtceu.common.satellite.LaserSatellite;
-import com.gregtechceu.gtceu.common.satellite.data.SatelliteData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
-
-import java.util.function.Function;
 
 /**
  * @author Screret

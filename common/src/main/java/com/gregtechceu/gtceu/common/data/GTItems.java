@@ -1064,6 +1064,12 @@ public class GTItems {
             .properties(p -> p.stacksTo(1))
             .onRegister(attach(new TerminalBehavior())).register();
 
+    public static ItemEntry<ComponentItem> GPS_TRACKER = REGISTRATE.item("gps_tracker", ComponentItem::create)
+            .lang("GPS Tracker")
+            .properties(p -> p.stacksTo(16))
+            .onRegister(attach(new GpsTrackerBehaviour()))
+            .register();
+
     public static final ItemEntry<Item>[] DYE_ONLY_ITEMS = new ItemEntry[DyeColor.values().length];
     static {
         for (int i = 0; i < DyeColor.values().length; i++) {

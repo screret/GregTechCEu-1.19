@@ -1,10 +1,10 @@
 package com.gregtechceu.gtceu.common.satellite;
 
+import com.gregtechceu.gtceu.api.capability.IGpsTracked;
 import com.gregtechceu.gtceu.api.satellite.Satellite;
 import com.gregtechceu.gtceu.api.satellite.SatelliteType;
-import com.gregtechceu.gtceu.common.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -13,10 +13,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Screret
@@ -24,9 +26,9 @@ import java.util.*;
  * @implNote GpsSatellite
  */
 public class GpsSatellite extends Satellite {
-    public static Map<Level, List<Entity>> trackedEntities = new LinkedHashMap<>();
+    public static Map<Level, Set<Entity>> trackedEntities = new LinkedHashMap<>();
 
-    private List<Entity> lastTrackedEntities = new ArrayList<>();
+    private Set<Entity> lastTrackedEntities = new HashSet<>();
 
     public GpsSatellite(SatelliteType<?> type, SatelliteData data, ResourceKey<Level> level) {
         super(type, data, level);
@@ -34,19 +36,19 @@ public class GpsSatellite extends Satellite {
 
     @Override
     public void tickSatellite(Level level) {
-        BlockPos pos = this.data.locationInWorld();
-        var list = level.getEntities(null, AABB.ofSize(new Vec3(pos.getX(), level.getSeaLevel(), pos.getZ()), this.data.range(), 100, this.data.range()));
-        lastTrackedEntities.removeAll(list);
+        if (jammed) return;
+        Vec2 pos = this.data.locationInWorld();
+        var set = level.getEntities(null, AABB.ofSize(new Vec3(pos.x, level.getSeaLevel(), pos.y), this.data.range(), 100, this.data.range())).stream().filter(ent -> ((IGpsTracked)ent).isGpsTracked()).collect(Collectors.toSet());
+        lastTrackedEntities.removeAll(set);
         var tracked = trackedEntities.get(level);
         tracked.removeAll(lastTrackedEntities);
-        tracked.addAll(list);
-        lastTrackedEntities = list;
+        tracked.addAll(set);
+        lastTrackedEntities = set;
     }
 
     @Override
     public boolean runSatelliteFunction(Level level) {
-        return true;
-
+        return false;
     }
 
     @Nullable

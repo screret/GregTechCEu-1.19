@@ -19,6 +19,7 @@
     "LootTablesMixin",
     "PackConfigMixin",
     "PlacedFeatureMixin",
+    "LivingEntityMixin",
     "RecipeManagerAccessor",
     "RecipeManagerInvoker",
     "RecipeManagerMixin",

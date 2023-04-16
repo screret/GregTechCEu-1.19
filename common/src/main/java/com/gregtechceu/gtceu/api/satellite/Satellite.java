@@ -1,11 +1,10 @@
 package com.gregtechceu.gtceu.api.satellite;
 
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import com.gregtechceu.gtceu.common.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
 import lombok.Getter;
-import net.minecraft.core.BlockPos;
+import lombok.Setter;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +26,9 @@ public abstract class Satellite {
     protected ResourceKey<Level> level;
     @Getter
     protected final SatelliteType<?> type;
+    @Getter
+    @Setter
+    protected boolean jammed;
 
     public Satellite(SatelliteType<?> type, SatelliteData data, ResourceKey<Level> level) {
         this.type = type;
@@ -42,6 +44,11 @@ public abstract class Satellite {
     }
 
     public abstract void tickSatellite(Level level);
+
+    public boolean runSatellite(Level level) {
+        if (jammed) return false;
+        return runSatelliteFunction(level);
+    }
     public abstract boolean runSatelliteFunction(Level level);
 
     public CompoundTag serializeNBT() {

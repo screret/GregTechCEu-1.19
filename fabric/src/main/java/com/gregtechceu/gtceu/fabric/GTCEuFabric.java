@@ -4,17 +4,24 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.capability.fabric.compat.EUToREProvider;
 import com.gregtechceu.gtceu.api.capability.fabric.GTCapability;
+import com.gregtechceu.gtceu.api.capability.GTCapabilityHelper;
+import com.gregtechceu.gtceu.api.capability.fabric.GTCapability;
 import com.gregtechceu.gtceu.api.machine.feature.IInteractedMachine;
 import com.gregtechceu.gtceu.api.recipe.ingredient.fabric.SizedIngredientImpl;
+import com.gregtechceu.gtceu.api.satellite.capability.SatelliteHolder;
 import com.gregtechceu.gtceu.common.ServerCommands;
 import com.gregtechceu.gtceu.common.fabric.CommonProxyImpl;
 import com.gregtechceu.gtceu.data.loader.fabric.OreDataLoaderImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import team.reborn.energy.api.EnergyStorage;
 
@@ -43,5 +50,16 @@ public class GTCEuFabric implements ModInitializer {
         if (GTCEu.isRebornEnergyLoaded()) {
             GTCapability.CAPABILITY_ENERGY.registerFallback(new EUToREProvider(EnergyStorage.SIDED::find));
         }
+
+
+        // register satellite ticking
+        ServerTickEvents.START_WORLD_TICK.register((serverLevel) -> {
+            if (!serverLevel.dimensionType().hasCeiling()) {
+                var sat = GTCapabilityHelper.getSatellites(serverLevel);
+                if (sat != null) sat.tickSatellites();
+            }
+        });
+
+        ServerWorldEvents.LOAD.register((server, world) -> GTCapability.CAPABILITY_SATELLITES.register(((level, context) -> new SatelliteHolder((ServerLevel) level)), world));
     }
 }

@@ -1,6 +1,7 @@
 package com.gregtechceu.gtceu.forge;
 
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.capability.GTCapabilityHelper;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.capability.forge.compat.EUToFEProvider;
 import com.gregtechceu.gtceu.api.capability.forge.GTCapability;
@@ -15,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
@@ -25,8 +27,10 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -91,8 +95,8 @@ public class ForgeCommonEventListener {
 
     @SubscribeEvent
     public static void registerLevelCapabilities(AttachCapabilitiesEvent<Level> event) {
-        if (!event.getObject().dimensionType().hasCeiling()) {
-            var satellites = new SatelliteHolder(event.getObject());
+        if (!event.getObject().dimensionType().hasCeiling() && !event.getObject().isClientSide) {
+            var satellites = new SatelliteHolder((ServerLevel) event.getObject());
             event.addCapability(GTCEu.id("satellites"), new ICapabilitySerializable<ListTag>() {
                 @Override
                 public ListTag serializeNBT() {
@@ -111,4 +115,13 @@ public class ForgeCommonEventListener {
             });
         }
     }
+
+    @SubscribeEvent
+    public static void serverTick(TickEvent.LevelTickEvent event) {
+        if (event.side == LogicalSide.SERVER && !event.level.dimensionType().hasCeiling()) {
+            var sat = GTCapabilityHelper.getSatellites(event.level);
+            if (sat != null) sat.tickSatellites();
+        }
+    }
+
 }

@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
-public class LevelApiLookupImpl<A> implements LevelApiLookup<A> {
-    private static final ApiLookupMap<LevelApiLookup<?>> LOOKUPS = ApiLookupMap.create(LevelApiLookupImpl::new);
+public class LevelApiLookupImpl<A, C> implements LevelApiLookup<A, C> {
+    private static final ApiLookupMap<LevelApiLookup<?, ?>> LOOKUPS = ApiLookupMap.create(LevelApiLookupImpl::new);
 
     @SuppressWarnings("unchecked")
-    public static <A> LevelApiLookup<A> get(ResourceLocation lookupId, Class<A> apiClass) {
+    public static <A, C> LevelApiLookup<A, C> get(ResourceLocation lookupId, Class<A> apiClass, Class<C> contextClass) {
         // Null checks are already handled by ApiLookupMap#get.
-        return (LevelApiLookup<A>) LOOKUPS.getLookup(lookupId, apiClass, null);
+        return (LevelApiLookup<A, C>) LOOKUPS.getLookup(lookupId, apiClass, contextClass);
     }
 
      private LevelApiLookupImpl(ResourceLocation identifier, Class<?> apiClass, Class<?> contextClass) {
@@ -27,19 +27,19 @@ public class LevelApiLookupImpl<A> implements LevelApiLookup<A> {
      }
 
      // We will use an ApiProviderMap to store the providers.
-     private final ApiProviderMap<Level, LevelApiProvider<A>> providerMap = ApiProviderMap.create();
+     private final ApiProviderMap<Level, LevelApiProvider<A, C>> providerMap = ApiProviderMap.create();
 
      @Nullable
-     public A find(Level level) {
-         LevelApiProvider<A> provider = providerMap.get(level);
+     public A find(Level level, C context) {
+         LevelApiProvider<A, C> provider = providerMap.get(level);
          if (provider == null) {
              return null;
          } else {
-             return provider.find(level);
+             return provider.find(level, context);
          }
      }
 
-     public void register(LevelApiProvider<A> provider, Level level) {
+     public void register(LevelApiProvider<A, C> provider, Level level) {
          Objects.requireNonNull(provider, "LevelApiProvider may not be null.");
          Objects.requireNonNull(level, "Level may not be null.");
 

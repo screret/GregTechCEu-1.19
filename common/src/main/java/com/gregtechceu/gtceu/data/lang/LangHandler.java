@@ -1070,6 +1070,12 @@ public class LangHandler {
         provider.add("gtceu.gui.content.chance_1", "§eChance: %s§r");
         provider.add("gtceu.gui.content.per_tick", "§aConsumed/Produced Per Tick§r");
         provider.add("gtceu.gui.content.tips.per_tick_short", "§a/tick§r");
+
+
+        provider.add("gtceu.satellite.gps", "GPS Satellite");
+        provider.add("gtceu.satellite.laser", "LASER Satellite");
+        provider.add("gtceu.satellite.empty", "Empty Satellite");
+        provider.add("gtceu.satellite.dyson_swarm", "Dyson Swarm Satellite");
     }
 
     /**

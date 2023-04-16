@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import team.reborn.energy.api.EnergyStorage;
@@ -70,6 +71,6 @@ public class GTCapabilityHelperImpl {
 
     @Nullable
     public static ISatelliteHolder getSatellites(Level level) {
-        return GTCapability.CAPABILITY_SATELLITES.find(level);
+        return GTCapability.CAPABILITY_SATELLITES.find(level, null);
     }
 }

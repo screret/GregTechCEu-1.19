@@ -1,6 +1,7 @@
 package com.gregtechceu.gtceu.api.satellite;
 
-import com.gregtechceu.gtceu.common.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
+import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
 import lombok.Getter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +21,11 @@ public class SatelliteType<T extends Satellite> {
     public SatelliteType(SatelliteFactory<T> factory) {
         this.factory = factory;
         this.defaultInstance = factory.create(this, SatelliteData.DEFAULT, Level.OVERWORLD);
+    }
+
+    public String toLangString() {
+        ResourceLocation id = GTRegistries.SATELLITES.getKey(this);
+        return id.getNamespace() + ".satellite." + id.getPath();
     }
 
     @FunctionalInterface

@@ -4,7 +4,7 @@ import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.api.satellite.Satellite;
 import com.gregtechceu.gtceu.api.satellite.SatelliteType;
 import com.gregtechceu.gtceu.common.data.GTSatellites;
-import com.gregtechceu.gtceu.common.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
 import com.gregtechceu.gtceu.utils.CustomInventory;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import lombok.Getter;
@@ -25,6 +25,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec2;
 
 /**
  * @author Screret
@@ -37,7 +38,10 @@ public class SpaceShipmentEntity extends Entity {
         public void write(FriendlyByteBuf buffer, Satellite value) {
             buffer.writeResourceLocation(GTRegistries.SATELLITES.getKey(value.getType()));
             buffer.writeResourceKey(value.getLevel());
-            buffer.writeBlockPos(value.getData().locationInWorld());
+
+            buffer.writeFloat(value.getData().locationInWorld().x);
+            buffer.writeFloat(value.getData().locationInWorld().y);
+
             buffer.writeVarInt(value.getData().range());
         }
 
@@ -45,9 +49,12 @@ public class SpaceShipmentEntity extends Entity {
         public Satellite read(FriendlyByteBuf buffer) {
             SatelliteType<?> type = GTRegistries.SATELLITES.get(buffer.readResourceLocation());
             ResourceKey<Level> levelResourceKey = buffer.readResourceKey(Registry.DIMENSION_REGISTRY);
-            BlockPos pos = buffer.readBlockPos();
+
+            float posX = buffer.readFloat();
+            float posY = buffer.readFloat();
+
             int range = buffer.readVarInt();
-            return type.getFactory().create(type, new SatelliteData(pos, range), levelResourceKey);
+            return type.getFactory().create(type, new SatelliteData(new Vec2(posX, posY), range), levelResourceKey);
         }
 
         @Override

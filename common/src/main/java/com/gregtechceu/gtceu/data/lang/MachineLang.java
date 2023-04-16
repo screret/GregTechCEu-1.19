@@ -402,6 +402,10 @@ public class MachineLang {
         provider.add("gtceu.multiblock.central_monitor.height_modify", "Modify Height: %d");
         multiLang(provider, "gtceu.multiblock.central_monitor.tooltip", "This is a machine that monitors machines proxied by the Digital Interface Cover. You can easily monitor the Fluids, Items, Energy, and States of machines proxied in Energy Network.", "You can build the central monitor screen from 3X2 to %dX%d (width X height).", "The default height is 3. You can adjust the screen height in the GUI before the structure is formed.", "Energy consumption: %d EU/s for each screen.");
         multiLang(provider, "gtceu.multiblock.monitor_screen.tooltip", "The GUI can be opened with a right-click of a screwdriver.", "The proxy mode of Digital Interface Cover can delegate machines' capabilities and GUI. (Yes, you can connect pipes directly on the screen.)", "The screen also supports plugins.");
+
+        provider.add("gtceu.machine.satellite_jammer.jammed", "Jammed %s");
+        provider.add("gtceu.machine.satellite_jammer.position", "At %s");
+
     }
 
     private static void standardTooltips(RegistrateLangProvider provider, String root, String lowTier, String midTier, String highTier) {
