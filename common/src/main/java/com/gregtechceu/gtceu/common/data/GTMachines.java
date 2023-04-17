@@ -1255,28 +1255,116 @@ public class GTMachines {
             .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
             .recipeType(GTRecipeTypes.SATELLITE_LAUNCH_SYSTEM_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "         ")
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   X X   ",  "         ",  "   X X   ",  "         ",  "   X X   ",  "         ",  "   X X   ",  "         ",  "   X X   ",  "         ")
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "   XXX   ",  "   X X   ",  "         ")
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "   XXX   ",  "         ",  "         ")
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   #A#   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "    T    ",  "         ")
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   A#A   ",  " TTT#TTT ",  " TTT#TTT ",  "  TT#TT  ",  "  TT#TT  ",  "   T#T   ",  "   T#T   ",  "   T#T   ",  "   T#T   ",  "    T    ")
-                    .aisle( "CCCCCCCCC",  "CCCCCCCCC",  "   #A#   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "   TTT   ",  "    T    ",  "         ")
-                    .aisle( "CCCCCCCCC",  "CCCCSCCCC",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ",  "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "   X X   ",
+                            "         ",
+                            "   X X   ",
+                            "         ",
+                            "   X X   ",
+                            "         ",
+                            "   X X   ",
+                            "         ",
+                            "   X X   ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "   XXX   ",
+                            "   X X   ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "         ",
+                            "    T    ",
+                            "    T    ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "   XXX   ",
+                            "         ",
+                            "         ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "   #A#   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "    B    ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "#########",
+                            "   A#A   ",
+                            " TTT#TTT ",
+                            " TTT#TTT ",
+                            "  TT#TT  ",
+                            "  TT#TT  ",
+                            "   T#T   ",
+                            "   T#T   ",
+                            "   T#T   ",
+                            "   BBB   ",
+                            "    B    ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "   #A#   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "   TTT   ",
+                            "    B    ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCSCCCC",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "         ")
                     .where('S', Predicates.controller(blocks(definition.getBlock())))
                     .where('#', Predicates.air())
                     .where(' ', Predicates.any())
-                    .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(160)
-                            .or(Predicates.abilities(PartAbility.IMPORT_ITEMS))
-                            .or(Predicates.abilities(PartAbility.EXPORT_ITEMS)))
+                    .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(120)
+                            .or(Predicates.autoAbilities(definition.getRecipeType())))
                     .where('X', blocks(MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.StainlessSteel).get()))
-                    .where('T', blocks(CASING_HSSE_STURDY.get()))
+                    .where('T', blocks(CASING_ALUMINIUM_AEROSPACE.get()))
                     .where('A', blocks(CASING_ROCKET_MOTOR.get()))
+                    .where('B', blocks(MATERIAL_BLOCKS.get(TagPrefix.block, GTMaterials.Polybenzimidazole).get()))
                     .build())
             .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
                     GTCEu.id("block/multiblock/assembly_line"), false)
             .register();
-    
+
     //////////////////////////////////////
     //**********     Misc     **********//
     //////////////////////////////////////

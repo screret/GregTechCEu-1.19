@@ -10,8 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -46,13 +46,13 @@ public class SatelliteHolder implements ISatelliteHolder {
     }
 
     @Override
-    public boolean addSatellite(Satellite satellite, Level level) {
-        return satellites.add(satellite);
+    public void addSatellite(@Nullable Satellite satellite) {
+        satellites.add(satellite);
     }
 
     @Override
-    public boolean destroySatellite(Satellite satellite, Level level) {
-        return false;
+    public void destroySatellite(Satellite satellite) {
+        satellites.remove(satellite);
     }
 
     public ListTag serializeNBT() {

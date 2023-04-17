@@ -623,6 +623,7 @@ public class LangHandler {
         provider.add("behaviour.paintspray.black.tooltip", "Can paint things in Black");
         provider.add("behaviour.paintspray.uses", "Remaining Uses: %d");
         provider.add("behaviour.prospecting", "Usable for Prospecting");
+        provider.add("behaviour.satellite.type", "Satellite Type: ");
 
 
         provider.add("metaitem.cover.digital.mode.proxy.disabled", "Click to enable Proxy Mode");

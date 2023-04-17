@@ -1070,6 +1070,12 @@ public class GTItems {
             .onRegister(attach(new GpsTrackerBehaviour()))
             .register();
 
+    public static ItemEntry<ComponentItem> KEYCARD = REGISTRATE.item("keycard", ComponentItem::create)
+            .lang("Advanced Electric Locking Chip")
+            .properties(p -> p.stacksTo(1))
+            .onRegister(attach(new KeyCardBehaviour()))
+            .register();
+
     public static final ItemEntry<Item>[] DYE_ONLY_ITEMS = new ItemEntry[DyeColor.values().length];
     static {
         for (int i = 0; i < DyeColor.values().length; i++) {

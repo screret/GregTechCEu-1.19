@@ -2,9 +2,7 @@ package com.gregtechceu.gtceu.api.capability;
 
 import com.gregtechceu.gtceu.api.satellite.Satellite;
 import com.gregtechceu.gtceu.api.satellite.SatelliteType;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -47,7 +45,7 @@ public interface ISatelliteHolder {
     @Nullable
     List<Satellite> getSatellitesNearPos(Vec2 position, int range);
 
-    boolean addSatellite(Satellite satellite, Level level);
+    void addSatellite(Satellite satellite);
 
-    boolean destroySatellite(Satellite satellite, Level level);
+    void destroySatellite(Satellite satellite);
 }

@@ -290,6 +290,8 @@ public class GTBlocks {
     public static final BlockEntry<Block> CASING_PTFE_INERT = createCasingBlock("inert_machine_casing", GTCEu.id("block/casings/solid/machine_casing_inert_ptfe"));
     public static final BlockEntry<Block> CASING_HSSE_STURDY = createCasingBlock("sturdy_machine_casing", GTCEu.id("block/casings/solid/machine_casing_study_hsse"));
     public static final BlockEntry<Block> CASING_TEMPERED_GLASS = createGlassCasingBlock("tempered_glass", GTCEu.id("block/casings/transparent/tempered_glass"), () -> RenderType::translucent);
+    public static final BlockEntry<Block> CASING_ALUMINIUM_AEROSPACE = createCasingBlock("aluminium_aerospace", GTCEu.id("block/casings/solid/machine_casing_aerospace"));
+
     public static final ImmutableMap<Material, BlockEntry<Block>> MATERIALS_TO_CASINGS;
 
     static {
@@ -365,8 +367,6 @@ public class GTBlocks {
     // todo multiblock tanks
     //WOOD_WALL("wood_wall", GTCEu.id(""));
 
-    public static final BlockEntry<Block> CASING_ROCKET_MOTOR = createCasingBlock("rocket_motor", GTCEu.id("block/variant/rocket_motor"));
-
     // Machine Casings
     public static final BlockEntry<Block> MACHINE_CASING_ULV = createMachineCasingBlock(ULV);
     public static final BlockEntry<Block> MACHINE_CASING_LV = createMachineCasingBlock(LV);
@@ -408,6 +408,7 @@ public class GTBlocks {
 
     public static final BlockEntry<ActiveBlock> CASING_ENGINE_INTAKE = createActiveCasing("engine_intake_casing", "block/variant/engine_intake");
     public static final BlockEntry<ActiveBlock> CASING_EXTREME_ENGINE_INTAKE = createActiveCasing("extreme_engine_intake_casing", "block/variant/extreme_engine_intake");
+    public static final BlockEntry<Block> CASING_ROCKET_MOTOR = createCasingBlock("rocket_motor", GTCEu.id("block/variant/rocket_motor"));
 
     //Fusion
     public static final Map<IFusionCasingType, Supplier<FusionCasingBlock>> ALL_FUSION_CASINGS = new HashMap<>();

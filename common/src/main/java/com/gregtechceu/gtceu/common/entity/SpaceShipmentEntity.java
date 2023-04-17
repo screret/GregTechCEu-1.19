@@ -27,6 +27,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 
+import java.util.UUID;
+
 /**
  * @author Screret
  * @date 2023/4/15
@@ -43,6 +45,8 @@ public class SpaceShipmentEntity extends Entity {
             buffer.writeFloat(value.getData().locationInWorld().y);
 
             buffer.writeVarInt(value.getData().range());
+
+            buffer.writeUUID(value.getData().owner());
         }
 
         @Override
@@ -54,7 +58,9 @@ public class SpaceShipmentEntity extends Entity {
             float posY = buffer.readFloat();
 
             int range = buffer.readVarInt();
-            return type.getFactory().create(type, new SatelliteData(new Vec2(posX, posY), range), levelResourceKey);
+
+            UUID owner = buffer.readUUID();
+            return type.getFactory().create(type, new SatelliteData(new Vec2(posX, posY), range, owner), levelResourceKey);
         }
 
         @Override
