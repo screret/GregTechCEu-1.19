@@ -27,6 +27,13 @@ import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.gregtechceu.gtceu.client.renderer.block.CTMModelRenderer;
 import com.gregtechceu.gtceu.client.renderer.machine.*;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
+import com.gregtechceu.gtceu.common.block.CoilBlock;
+import com.gregtechceu.gtceu.common.machine.electric.BatteryBufferMachine;
+import com.gregtechceu.gtceu.common.machine.electric.PumpMachine;
+import com.gregtechceu.gtceu.common.machine.electric.TransformerMachine;
+import com.gregtechceu.gtceu.common.machine.multiblock.electric.CrackerMachine;
+import com.gregtechceu.gtceu.common.machine.multiblock.electric.ElectricBlastFurnaceMachine;
+import com.gregtechceu.gtceu.common.machine.multiblock.electric.SatelliteLaunchSystemMachine;
 import com.gregtechceu.gtceu.common.machine.electric.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeCombustionEngineMachine;
@@ -1250,7 +1257,7 @@ public class GTMachines {
             GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
             GTCEu.id("block/multiblock/generator/large_plasma_turbine"));
 
-    public static final MultiblockMachineDefinition SATELLITE_LAUNCH_SYSTEM = REGISTRATE.multiblock("satellite_launch_system", WorkableElectricMultiblockMachine::new)
+    public static final MultiblockMachineDefinition SATELLITE_LAUNCH_SYSTEM = REGISTRATE.multiblock("satellite_launch_system", SatelliteLaunchSystemMachine::new)
             .rotationState(RotationState.NON_Y_AXIS)
             .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
             .recipeType(GTRecipeTypes.SATELLITE_LAUNCH_SYSTEM_RECIPES)
@@ -1295,8 +1302,20 @@ public class GTMachines {
                             "CCCCCCCCC",
                             "         ",
                             "    T    ",
-                            "    T    ",
                             "         ",
+                            "         ",
+                            "         ",
+                            "         ",
+                            "   XXX   ",
+                            "         ",
+                            "         ",
+                            "         ")
+                    .aisle( "CCCCCCCCC",
+                            "CCCCCCCCC",
+                            "         ",
+                            "    T    ",
+                            "    T    ",
+                            "    T    ",
                             "         ",
                             "         ",
                             "   XXX   ",
@@ -1354,7 +1373,7 @@ public class GTMachines {
                     .where('S', Predicates.controller(blocks(definition.getBlock())))
                     .where('#', Predicates.air())
                     .where(' ', Predicates.any())
-                    .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(120)
+                    .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(110)
                             .or(Predicates.autoAbilities(definition.getRecipeType())))
                     .where('X', blocks(MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.StainlessSteel).get()))
                     .where('T', blocks(CASING_ALUMINIUM_AEROSPACE.get()))

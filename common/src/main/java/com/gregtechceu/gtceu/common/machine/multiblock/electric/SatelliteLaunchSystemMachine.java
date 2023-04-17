@@ -13,6 +13,7 @@ import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.KeyCardBehaviour;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
+import com.lowdragmc.lowdraglib.gui.texture.GuiTextureGroup;
 import com.lowdragmc.lowdraglib.gui.widget.ComponentPanelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.DraggableScrollableWidgetGroup;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
@@ -55,7 +56,7 @@ public class SatelliteLaunchSystemMachine extends WorkableElectricMultiblockMach
     }
 
     protected NotifiableItemStackHandler createInventory() {
-        return new NotifiableItemStackHandler(this, 1, IO.NONE);
+        return new NotifiableItemStackHandler(this, 1, IO.BOTH);
     }
 
     @Override
@@ -92,9 +93,9 @@ public class SatelliteLaunchSystemMachine extends WorkableElectricMultiblockMach
         screen.addWidget(new ComponentPanelWidget(4, 17, this::addDisplayText)
                 .setMaxWidthLimit(156)
                 .clickHandler(this::handleDisplayClick));
-        return new ModularUI(180, 216, this, entityPlayer)
+        return new ModularUI(190, 216, this, entityPlayer)
                 .background(GuiTextures.BACKGROUND)
-                .widget(new SlotWidget(inventory, 0, 168, 126))
+                .widget(new SlotWidget(inventory, 0, 168, 107).setBackgroundTexture(new GuiTextureGroup(GuiTextures.SLOT)))
                 .widget(screen)
                 .widget(UITemplate.bindPlayerInventory(entityPlayer.getInventory(), GuiTextures.SLOT, 7, 134, true));
     }
