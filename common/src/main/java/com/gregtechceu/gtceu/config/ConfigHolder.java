@@ -189,6 +189,12 @@ public class ConfigHolder {
         @Configurable
         @Configurable.Comment({"Whether the machine's circuit slot need to be inserted a real circuit."})
         public boolean ghostCircuit = true;
+        @Configurable
+        @Configurable.Comment({"Whether the machine's circuit slot need to be inserted a real circuit."})
+        public float laserSatelliteDamagePerTickStep = 2.0F;
+        @Configurable
+        @Configurable.Comment({"Whether the machine's circuit slot need to be inserted a real circuit."})
+        public int laserSatelliteMiningTickStep = 2;
     }
 
     public static class ClientConfigs {

@@ -19,6 +19,7 @@ public class PolymerRecipes {
         styreneButadieneProcess(provider);
         polybenzimidazoleProcess(provider);
         polycaprolactamProcess(provider);
+        polyOxydiphenylenePyromellitimideProcess(provider);
     }
 
     private static void polyethyleneProcess(Consumer<FinishedRecipe> provider) {
@@ -507,5 +508,69 @@ public class PolymerRecipes {
                 .inputFluids(Nitrogen.getFluid(1000))
                 .outputItems(ingot, Polycaprolactam, 1)
                 .save(provider);
+    }
+
+    public static void polyOxydiphenylenePyromellitimideProcess(Consumer<FinishedRecipe> provider) {
+        // Kapton K
+        CHEMICAL_RECIPES.recipeBuilder("aminophenol")
+                .inputFluids(Phenol.getFluid(1000))
+                .inputFluids(NitrationMixture.getFluid(1000))
+                .notConsumable(dust, Iron)
+                .outputFluids(AminoPhenol.getFluid(1000))
+                .outputFluids(DilutedSulfuricAcid.getFluid(1000))
+                .duration(300).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("chloronitrobenzene")
+                .inputFluids(Chlorobenzene.getFluid(1000))
+                .inputFluids(NitricAcid.getFluid(1000))
+                .outputFluids(ChloroNitrobenzene.getFluid(1000))
+                .outputFluids(Water.getFluid(1000))
+                .duration(400).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("dimethylformamide")
+                .inputFluids(CarbonMonoxide.getFluid(1000))
+                .inputFluids(Dimethylamine.getFluid(1000))
+                .outputFluids(Dimethylformamide.getFluid(1000))
+                .duration(200).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("pyrometillic_dianhydride")
+                .inputFluids(Durene.getFluid(250))
+                .inputFluids(Oxygen.getFluid(1500))
+                .outputFluids(PyromelliticDianhydride.getFluid(250))
+                .outputFluids(Water.getFluid(1500))
+                .duration(400).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("potassium_hydroxide")
+                .inputFluids(Durene.getFluid(250))
+                .inputFluids(Oxygen.getFluid(1500))
+                .outputItems(dust, PyromelliticDianhydride)
+                .outputFluids(Water.getFluid(1500))
+                .duration(400).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("oxydianiline_sludge")
+                .inputFluids(AminoPhenol.getFluid(1000))
+                .inputFluids(ChloroNitrobenzene.getFluid(1000))
+                .inputFluids(Dimethylformamide.getFluid(1000))
+                .inputItems(dust, PotassiumCarbonate)
+                .outputFluids(OxydianilineSludge.getFluid(250))
+                .outputFluids(Water.getFluid(1500))
+                .duration(400).EUt(VA[HV]).save(provider);
+
+        DISTILLATION_RECIPES.recipeBuilder("distill_oxydianiline_sludge")
+                .inputFluids(OxydianilineSludge.getFluid(1000))
+                .outputFluids(Dimethylformamide.getFluid(1000))
+                .outputItems(dust, Oxydianiline, 1)
+                .duration(200).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("poly_oxydiphenylene_pyromellitimide")
+                .inputFluids(PyromelliticDianhydride.getFluid(1000))
+                .inputFluids(Oxydianiline.getFluid(1000))
+                .outputFluids(PolyOxydiphenylenePyromellitimide.getFluid(1000))
+                .duration(400).EUt(VA[HV]).save(provider);
+
+        // Kapton E coming soon:tm:
+        /*
+        * ortho-Xylene, 3 Oxygen, Palladium (Cata (consumed)) -> biphenyltetracarboxylic acid dianhydride (BPDA) (C16H6O6), 3 Water (heater), Hydrogen (skips a step: Phthalic Anhydride (C6H4(CO)2O))
+        * */
     }
 }

@@ -911,6 +911,24 @@ public class FirstDegreeMaterials {
                 .components(Potassium, 2, Chromium, 2, Oxygen, 7)
                 .buildAndRegister();
 
+        PotassiumChloride = new Material.Builder("potassium_chloride")
+                .dust(1)
+                .color(0xF6F1AE)
+                .components(Potassium, 1, Chlorine, 1)
+                .buildAndRegister();
+
+        PotassiumCarbonate = new Material.Builder("potassium_carbonate")
+                .dust(1)
+                .color(0xF6F2C1)
+                .components(Potassium, 2, Carbon, 1, Oxygen, 3)
+                .buildAndRegister();
+
+        PotassiumHydroxide = new Material.Builder("potassium_hydroxide")
+                .dust(1)
+                .color(0xFF084E)
+                .components(Potassium, 1, Oxygen, 1, Hydrogen, 1)
+                .buildAndRegister();
+
         ChromiumTrioxide = new Material.Builder("chromium_trioxide")
                 .dust(1)
                 .color(0xFFE4E1)

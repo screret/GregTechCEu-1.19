@@ -136,10 +136,11 @@ public class DistillationRecipes {
         DISTILLATION_RECIPES.recipeBuilder("distill_coal_tar")
                 .inputFluids(CoalTar.getFluid(1000))
                 .outputItems(dustSmall, Coke)
-                .outputFluids(Naphthalene.getFluid(400))
+                .outputFluids(Naphthalene.getFluid(300))
                 .outputFluids(HydrogenSulfide.getFluid(300))
                 .outputFluids(Creosote.getFluid(200))
                 .outputFluids(Phenol.getFluid(100))
+                .outputFluids(Durene.getFluid(100))
                 .duration(80).EUt(VA[MV])
                 .save(provider);
 

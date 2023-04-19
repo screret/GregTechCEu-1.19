@@ -35,7 +35,7 @@ public record SatelliteData(Vec2 locationInWorld, int range, UUID owner) {
 
         tag.putInt("range", range);
 
-        tag.put("ownerId", ExtraCodecs.UUID.encode(this.owner, NbtOps.INSTANCE, new IntArrayTag(new int[4])).result().orElseThrow());
+        tag.putUUID("ownerId", this.owner);
         return tag;
     }
 

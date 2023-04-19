@@ -47,7 +47,7 @@ public class SatelliteHolder implements ISatelliteHolder {
 
     @Override
     public void addSatellite(@Nullable Satellite satellite) {
-        satellites.add(satellite);
+        if (satellite != null) satellites.add(satellite);
     }
 
     @Override

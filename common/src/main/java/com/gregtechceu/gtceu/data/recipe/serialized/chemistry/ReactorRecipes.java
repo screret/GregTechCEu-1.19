@@ -2,6 +2,7 @@ package com.gregtechceu.gtceu.data.recipe.serialized.chemistry;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.MarkerMaterials;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -682,5 +683,26 @@ public class ReactorRecipes {
                 .inputFluids(PolyvinylAcetate.getFluid(144))
                 .outputFluids(PolyvinylButyral.getFluid(144))
                 .duration(400).EUt(VA[HV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("potassium_chloride")
+                .inputItems(dust, Potassium)
+                .inputFluids(Chlorine.getFluid(1000))
+                .outputItems(dust, PotassiumChloride, 1)
+                .duration(100).EUt(VA[ULV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("potassium_hydroxide")
+                .inputItems(dust, PotassiumChloride)
+                .inputFluids(Water.getFluid(1000))
+                .outputItems(dust, PotassiumHydroxide, 1)
+                .outputFluids(Chlorine.getFluid(1000))
+                .outputFluids(Hydrogen.getFluid(1000))
+                .duration(100).EUt(VA[LV]).save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("potassium_carbonate")
+                .inputItems(dust, PotassiumHydroxide, 2)
+                .inputFluids(CarbonDioxide.getFluid(1000))
+                .outputItems(dust, PotassiumCarbonate, 1)
+                .outputFluids(Water.getFluid(1000))
+                .duration(100).EUt(VA[LV]).save(provider);
     }
 }

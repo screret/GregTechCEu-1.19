@@ -8,12 +8,18 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -30,16 +36,17 @@ public class KeyCardBehaviour implements IInteractionItem {
 
     public static void setOwner(ItemStack stack, LivingEntity entity) {
         if (stack.is(GTItems.KEYCARD.get())) {
-            stack.getOrCreateTag().put("gtceu:KeyCardOwner", ExtraCodecs.UUID.encode(entity.getUUID(), NbtOps.INSTANCE, new IntArrayTag(new int[4])).result().orElse(new CompoundTag()));
+            stack.getOrCreateTag().putUUID("gtceu:KeyCardOwner", entity.getUUID());
         }
     }
 
     @Override
-    public InteractionResult onItemUseFirst(ItemStack itemStack, UseOnContext context) {
-        if (!itemStack.getOrCreateTag().contains("gtceu:KeyCardOwner") && context.getPlayer().isCrouching()) {
-            setOwner(itemStack, context.getPlayer());
-            return InteractionResult.SUCCESS;
+    public InteractionResultHolder<ItemStack> use(Item item, Level level, Player player, InteractionHand usedHand) {
+        ItemStack itemStack = player.getItemInHand(usedHand);
+        if (!level.isClientSide && !itemStack.getOrCreateTag().contains("gtceu:KeyCardOwner") && player.isCrouching()) {
+            setOwner(itemStack, player);
+            return InteractionResultHolder.consume(itemStack);
         }
-        return InteractionResult.PASS;
+        return InteractionResultHolder.pass(itemStack);
     }
 }

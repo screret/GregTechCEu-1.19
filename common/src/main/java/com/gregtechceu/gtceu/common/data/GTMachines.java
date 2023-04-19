@@ -1257,10 +1257,10 @@ public class GTMachines {
             GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
             GTCEu.id("block/multiblock/generator/large_plasma_turbine"));
 
-    public static final MultiblockMachineDefinition SATELLITE_LAUNCH_SYSTEM = REGISTRATE.multiblock("satellite_launch_system", SatelliteLaunchSystemMachine::new)
+    public static final MultiblockMachineDefinition SPACE_SHUTTLE = REGISTRATE.multiblock("space_shuttle", SatelliteLaunchSystemMachine::new)
             .rotationState(RotationState.NON_Y_AXIS)
             .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
-            .recipeType(GTRecipeTypes.SATELLITE_LAUNCH_SYSTEM_RECIPES)
+            .recipeType(GTRecipeTypes.SPACE_SHUTTLE_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle( "CCCCCCCCC",
                             "CCCCCCCCC",
@@ -1324,7 +1324,7 @@ public class GTMachines {
                             "         ")
                     .aisle( "CCCCCCCCC",
                             "CCCCCCCCC",
-                            "   #A#   ",
+                            "    A    ",
                             "   TTT   ",
                             "   TTT   ",
                             "   TTT   ",
@@ -1335,20 +1335,20 @@ public class GTMachines {
                             "    B    ",
                             "         ")
                     .aisle( "CCCCCCCCC",
-                            "#########",
-                            "   A#A   ",
-                            " TTT#TTT ",
-                            " TTT#TTT ",
-                            "  TT#TT  ",
-                            "  TT#TT  ",
-                            "   T#T   ",
-                            "   T#T   ",
-                            "   T#T   ",
-                            "   BBB   ",
+                            "         ",
+                            "   A A   ",
+                            " TTTTTTT ",
+                            " TTT TTT ",
+                            "  TT TT  ",
+                            "  TT TT  ",
+                            "   T T   ",
+                            "   T T   ",
+                            "   T T   ",
+                            "   B B   ",
                             "    B    ")
                     .aisle( "CCCCCCCCC",
                             "CCCCCCCCC",
-                            "   #A#   ",
+                            "    A    ",
                             "   TTT   ",
                             "   TTT   ",
                             "   TTT   ",
@@ -1371,14 +1371,13 @@ public class GTMachines {
                             "         ",
                             "         ")
                     .where('S', Predicates.controller(blocks(definition.getBlock())))
-                    .where('#', Predicates.air())
-                    .where(' ', Predicates.any())
+                    .where(' ', Predicates.air())
                     .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(110)
                             .or(Predicates.autoAbilities(definition.getRecipeType())))
                     .where('X', blocks(MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.StainlessSteel).get()))
                     .where('T', blocks(CASING_ALUMINIUM_AEROSPACE.get()))
                     .where('A', blocks(CASING_ROCKET_MOTOR.get()))
-                    .where('B', blocks(MATERIAL_BLOCKS.get(TagPrefix.block, GTMaterials.Polybenzimidazole).get()))
+                    .where('B', blocks(MATERIAL_BLOCKS.get(TagPrefix.block, GTMaterials.PolyOxydiphenylenePyromellitimide).get()))
                     .build())
             .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
                     GTCEu.id("block/multiblock/assembly_line"), false)

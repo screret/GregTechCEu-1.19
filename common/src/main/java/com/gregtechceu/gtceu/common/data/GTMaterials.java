@@ -591,6 +591,9 @@ public class GTMaterials {
     public static Material Realgar;
     public static Material SodiumBicarbonate;
     public static Material PotassiumDichromate;
+    public static Material PotassiumChloride;
+    public static Material PotassiumHydroxide;
+    public static Material PotassiumCarbonate;
     public static Material ChromiumTrioxide;
     public static Material AntimonyTrioxide;
     public static Material Zincite;
@@ -688,6 +691,12 @@ public class GTMaterials {
     public static Material Polyethylene;
     public static Material Epoxy;
     public static Material Polycaprolactam;
+    public static Material PolyOxydiphenylenePyromellitimide;
+    public static Material PyromelliticDianhydride;
+    public static Material Durene;
+    public static Material FormicAcid;
+    public static Material Oxydianiline;
+    public static Material OxydianilineSludge;
     public static Material Polytetrafluoroethylene;
     public static Material Sugar;
     public static Material Methane;
@@ -710,6 +719,7 @@ public class GTMaterials {
     public static Material Ethenone;
     public static Material Tetranitromethane;
     public static Material Dimethylamine;
+    public static Material Dimethylformamide;
     public static Material Dimethylhydrazine;
     public static Material DinitrogenTetroxide;
     public static Material Dimethyldichlorosilane;
@@ -718,6 +728,7 @@ public class GTMaterials {
     public static Material Dichlorobenzene;
     public static Material AceticAcid;
     public static Material Phenol;
+    public static Material AminoPhenol;
     public static Material BisphenolA;
     public static Material VinylChloride;
     public static Material Ethylene;
@@ -739,6 +750,7 @@ public class GTMaterials {
     public static Material Ethylbenzene;
     public static Material Naphthalene;
     public static Material Nitrobenzene;
+    public static Material ChloroNitrobenzene;
     public static Material Cyclohexane;
     public static Material NitrosylChloride;
     public static Material CyclohexanoneOxime;

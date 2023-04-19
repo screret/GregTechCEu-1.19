@@ -37,6 +37,7 @@ public class BlockLang {
         replace(provider, "block.gtceu.casing_primitive_bricks", "Firebricks");
         replace(provider, "block.gtceu.casing_invar_heatproof", "Heat Proof Invar Machine Casing");
         replace(provider, "block.gtceu.casing_aluminium_frostproof", "Frost Proof Aluminium Machine Casing");
+        replace(provider, "block.gtceu.casing_aluminium_aerospace", "Aerospace-grade Aluminium Machine Casing");
         replace(provider, "block.gtceu.casing_steel_solid", "Solid Steel Machine Casing");
         replace(provider, "block.gtceu.casing_stainless_clean", "Clean Stainless Steel Casing");
         replace(provider, "block.gtceu.casing_titanium_stable", "Stable Titanium Machine Casing");
@@ -75,6 +76,7 @@ public class BlockLang {
         replace(provider, "block.gtceu.active_casing_engine_intake", "Engine Intake Casing");
         replace(provider, "block.gtceu.active_casing_extreme_engine_intake", "Extreme Engine Intake Casing");
         replace(provider, "block.gtceu.active_casing_assembly_line", "Assembly Line Casing");
+        replace(provider, "block.gtceu.active_casing_rocket_motor", "Rocket motor");
 
         replace(provider, "block.gtceu.bronze_firebox", "Bronze Firebox Casing");
         replace(provider, "block.gtceu.steel_firebox", "Steel Firebox Casing");

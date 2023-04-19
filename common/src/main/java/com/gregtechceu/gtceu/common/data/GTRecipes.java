@@ -51,6 +51,7 @@ public class GTRecipes {
         AssemblerRecipeLoader.init(consumer);
         AssemblyLineLoader.init(consumer);
         BatteryRecipes.init(consumer);
+        SpaceShuttleRecipeLoader.init(consumer);
 
         CircuitRecipes.init(consumer);
         ComponentRecipes.init(consumer);

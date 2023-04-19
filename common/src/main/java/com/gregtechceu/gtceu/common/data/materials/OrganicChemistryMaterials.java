@@ -29,6 +29,13 @@ public class OrganicChemistryMaterials {
                 .components(Carbon, 6, Hydrogen, 5, Nitrogen, 1, Oxygen, 2)
                 .buildAndRegister();
 
+        ChloroNitrobenzene = new Material.Builder("chloronitrobenzene")
+                .fluid(FluidTypes.GAS)
+                .color(0x796013)
+                .flags(DISABLE_DECOMPOSITION)
+                .components(Carbon, 6, Hydrogen, 4, Fluorine, 1, Nitrogen, 1, Oxygen, 2)
+                .buildAndRegister();
+
         RawRubber = new Material.Builder("raw_rubber")
                 .polymer()
                 .color(0xCCC789)
@@ -132,6 +139,59 @@ public class OrganicChemistryMaterials {
                 .color(0x323232)
                 .appendFlags(STD_METAL, GENERATE_FOIL)
                 .components(Carbon, 6, Hydrogen, 11, Nitrogen, 1, Oxygen, 1)
+                .fluidTemp(493)
+                .buildAndRegister();
+
+        PolyOxydiphenylenePyromellitimide = new Material.Builder("poly_oxydiphenylene_pyromellitimide")
+                .polymer(1)
+                .color(0x915A23)
+                .appendFlags(STD_METAL, GENERATE_FOIL)
+                .components(Carbon, 6, Hydrogen, 11, Nitrogen, 1, Oxygen, 1)
+                .fluidTemp(493)
+                .buildAndRegister();
+
+        PyromelliticDianhydride = new Material.Builder("pyrometillic_dianhydride")
+                .dust()
+                .color(0xB48C63)
+                .components(Carbon, 10, Hydrogen, 2, Oxygen, 6)
+                .fluidTemp(493)
+                .buildAndRegister()
+                .setFormula("C6H2(C2O3)2", true);
+
+        Durene = new Material.Builder("durene")
+                .fluid()
+                .color(0xB48C63)
+                .components(Carbon, 10, Hydrogen, 14)
+                .fluidTemp(493)
+                .buildAndRegister()
+                .setFormula("C6H2(CH3)4", true);
+
+        FormicAcid = new Material.Builder("formic_acid")
+                .fluid(FluidTypes.ACID)
+                .color(0xA6A6A6)
+                .flags(DISABLE_DECOMPOSITION)
+                .components(Carbon, 1, Hydrogen, 2, Oxygen, 2)
+                .buildAndRegister();
+
+        Dimethylformamide = new Material.Builder("dimethylformamide")
+                .fluid()
+                .color(0x554469)
+                .flags(DISABLE_DECOMPOSITION)
+                .components(Carbon, 3, Hydrogen, 7, Nitrogen, 1, Oxygen, 1)
+                .buildAndRegister()
+                .setFormula("(CH3)2NC(O)H", true);
+
+        Oxydianiline = new Material.Builder("oxydianiline")
+                .dust()
+                .color(0xfAAEE0)
+                .components(Carbon, 12, Hydrogen, 12, Nitrogen, 2, Oxygen, 1)
+                .fluidTemp(493)
+                .buildAndRegister();
+
+        OxydianilineSludge = new Material.Builder("oxydianiline_sludge")
+                .fluid()
+                .color(0xD9CCBF)
+                .components(Oxydianiline, 1, Dimethylformamide, 1)
                 .fluidTemp(493)
                 .buildAndRegister();
 
@@ -339,6 +399,14 @@ public class OrganicChemistryMaterials {
                 .flags(DISABLE_DECOMPOSITION)
                 .components(Carbon, 6, Hydrogen, 6, Oxygen, 1)
                 .buildAndRegister();
+
+        AminoPhenol = new Material.Builder("aminophenol")
+                .fluid()
+                .color(0x784421)
+                .flags(DISABLE_DECOMPOSITION)
+                .components(Carbon, 6, Hydrogen, 7, Nitrogen, 1, Oxygen, 1)
+                .buildAndRegister()
+                .setFormula("H2NC6H4OH", true);
 
         BisphenolA = new Material.Builder("bisphenol_a")
                 .fluid()

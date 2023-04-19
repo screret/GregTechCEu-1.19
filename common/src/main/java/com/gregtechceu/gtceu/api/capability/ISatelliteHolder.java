@@ -45,7 +45,7 @@ public interface ISatelliteHolder {
     @Nullable
     List<Satellite> getSatellitesNearPos(Vec2 position, int range);
 
-    void addSatellite(Satellite satellite);
+    void addSatellite(@Nullable Satellite satellite);
 
     void destroySatellite(Satellite satellite);
 }

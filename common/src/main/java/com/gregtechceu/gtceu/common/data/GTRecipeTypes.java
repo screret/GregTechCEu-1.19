@@ -537,7 +537,7 @@ public class GTRecipeTypes {
             .setSound(GTSoundEntries.ARC)
             .addDataInfo(data -> LocalizationUtils.format("gtceu.recipe.eu_to_start", data.getLong("eu_to_start")));
 
-    public static final GTRecipeType SATELLITE_LAUNCH_SYSTEM_RECIPES = register("satellite_launch_system", MULTIBLOCK).setMaxIOSize(4, 0, 2, 0).setEUIO(IO.IN)
+    public static final GTRecipeType SPACE_SHUTTLE_RECIPES = register("space_shuttle", MULTIBLOCK).setMaxIOSize(4, 0, 2, 0).setEUIO(IO.IN)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ROCKET, LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.ROCKET);
 
