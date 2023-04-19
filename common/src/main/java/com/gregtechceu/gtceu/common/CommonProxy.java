@@ -53,6 +53,8 @@ public class CommonProxy {
         GTItems.init();
         GregTechDatagen.init();
 
+        GTDimensionTypes.init();
+
         // fabric exclusive, squeeze this in here to register before stuff is used
         GTRegistries.REGISTRATE.registerRegistrate();
         WorldGenLayers.registerAll();

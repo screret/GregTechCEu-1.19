@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.biome.Biome;
 
 public class CustomTags {
 
@@ -47,7 +47,10 @@ public class CustomTags {
     public static final TagKey<Item> UV_BATTERIES = TagUtil.createPlatformItemTag("batteries/uv", "uv_batteries");
     public static final TagKey<Item> UHV_BATTERIES = TagUtil.createPlatformItemTag("batteries/uhv", "uhv_batteries");
 
-    public static final TagKey<Item> SATELLITES = TagUtil.createItemTag("satellites");
+    public static final TagKey<Item> SATELLITES = TagUtil.createModItemTag("satellites");
+
+    public static final TagKey<Block> INFINIBURN_SPACE = TagUtil.createModBlockTag("infiniburn_space");
+
 
     // Platform-dependent tags
     public static final TagKey<Item> TAG_WOODEN_CHESTS = TagUtil.createPlatformItemTag("chests/wooden", "chests");
