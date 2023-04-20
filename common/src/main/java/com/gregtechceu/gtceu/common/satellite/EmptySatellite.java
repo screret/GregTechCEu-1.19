@@ -1,8 +1,8 @@
 package com.gregtechceu.gtceu.common.satellite;
 
-import com.gregtechceu.gtceu.api.satellite.Satellite;
-import com.gregtechceu.gtceu.api.satellite.SatelliteType;
-import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.space.satellite.Satellite;
+import com.gregtechceu.gtceu.api.space.satellite.SatelliteType;
+import com.gregtechceu.gtceu.api.space.satellite.data.SatelliteData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;

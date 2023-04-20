@@ -1076,6 +1076,12 @@ public class GTItems {
             .onRegister(attach(new KeyCardBehaviour()))
             .register();
 
+    public static ItemEntry<ComponentItem> ID_CHIP = REGISTRATE.item("id_chip", ComponentItem::create)
+            .lang("Magnet-strip Identification Chip")
+            .properties(p -> p.stacksTo(1))
+            .onRegister(attach(new IdChipBehaviour()))
+            .register();
+
     public static final ItemEntry<Item>[] DYE_ONLY_ITEMS = new ItemEntry[DyeColor.values().length];
     static {
         for (int i = 0; i < DyeColor.values().length; i++) {

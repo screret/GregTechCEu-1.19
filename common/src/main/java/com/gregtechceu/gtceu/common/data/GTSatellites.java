@@ -2,8 +2,8 @@ package com.gregtechceu.gtceu.common.data;
 
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import com.gregtechceu.gtceu.api.satellite.Satellite;
-import com.gregtechceu.gtceu.api.satellite.SatelliteType;
+import com.gregtechceu.gtceu.api.space.satellite.Satellite;
+import com.gregtechceu.gtceu.api.space.satellite.SatelliteType;
 import com.gregtechceu.gtceu.common.satellite.DysonSwarmSatellite;
 import com.gregtechceu.gtceu.common.satellite.EmptySatellite;
 import com.gregtechceu.gtceu.common.satellite.GpsSatellite;

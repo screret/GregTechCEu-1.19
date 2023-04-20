@@ -54,6 +54,7 @@ public class CommonProxy {
         GregTechDatagen.init();
 
         GTDimensionTypes.init();
+        GTBiomes.init();
 
         // fabric exclusive, squeeze this in here to register before stuff is used
         GTRegistries.REGISTRATE.registerRegistrate();

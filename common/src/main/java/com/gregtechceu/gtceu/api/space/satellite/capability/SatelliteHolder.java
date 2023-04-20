@@ -1,15 +1,13 @@
-package com.gregtechceu.gtceu.api.satellite.capability;
+package com.gregtechceu.gtceu.api.space.satellite.capability;
 
-import com.google.common.collect.Comparators;
 import com.gregtechceu.gtceu.api.capability.ISatelliteHolder;
-import com.gregtechceu.gtceu.api.satellite.Satellite;
+import com.gregtechceu.gtceu.api.space.satellite.Satellite;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

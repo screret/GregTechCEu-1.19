@@ -115,6 +115,8 @@ public class LangHandler {
         provider.add("metaitem.dust.tooltip.purify", "Throw into Cauldron to get clean Dust");
         provider.add("metaitem.crushed.tooltip.purify", "Throw into Cauldron to get Purified Ore");
         provider.add("metaitem.int_circuit.configuration", "Configuration: %d");
+        provider.add("metaitem.id_circuit.id", "Circuit ID: %d");
+        provider.add("metaitem.id_circuit.position", "Station Position: [x=%d,z=%d]");
 
 
         provider.add("item.gtceu.tool.replace_tool_head", "Craft with a new Tool Head to replace it");
@@ -376,6 +378,7 @@ public class LangHandler {
         replace(provider, GTMaterials.OilHeavy.getUnlocalizedName(), "Heavy Oil");
         replace(provider, GTMaterials.OilLight.getUnlocalizedName(), "Light Oil");
         replace(provider, GTMaterials.RawOil.getUnlocalizedName(), "Raw Oil");
+        replace(provider, GTMaterials.PolyOxydiphenylenePyromellitimide.getUnlocalizedName(), "Poly(4,4'-Oxydiphenylene-Pyromellitimide)");
 
         // TODO all individual material item overrides do not work
         provider.add("item.gunpowder_tiny_dust", "Tiny Pile of Gunpowder");

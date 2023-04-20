@@ -1,7 +1,7 @@
 package com.gregtechceu.gtceu.api.capability;
 
-import com.gregtechceu.gtceu.api.satellite.Satellite;
-import com.gregtechceu.gtceu.api.satellite.SatelliteType;
+import com.gregtechceu.gtceu.api.space.satellite.Satellite;
+import com.gregtechceu.gtceu.api.space.satellite.SatelliteType;
 import net.minecraft.world.phys.Vec2;
 
 import javax.annotation.Nullable;

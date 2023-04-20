@@ -9,13 +9,14 @@ import com.gregtechceu.gtceu.api.item.forge.ComponentItemImpl;
 import com.gregtechceu.gtceu.api.item.forge.DrumMachineItemImpl;
 import com.gregtechceu.gtceu.api.machine.feature.IInteractedMachine;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
-import com.gregtechceu.gtceu.api.satellite.capability.SatelliteHolder;
+import com.gregtechceu.gtceu.api.space.satellite.capability.SatelliteHolder;
+import com.gregtechceu.gtceu.api.space.station.capability.SpaceStationHolder;
 import com.gregtechceu.gtceu.common.ServerCommands;
+import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
 import com.gregtechceu.gtceu.data.loader.forge.OreDataLoaderImpl;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -111,6 +112,25 @@ public class ForgeCommonEventListener {
                 @Override
                 public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
                     return GTCapability.CAPABILITY_SATELLITES.orEmpty(capability, LazyOptional.of(() -> satellites));
+                }
+            });
+        }
+        if (event.getObject().dimensionTypeId() == GTDimensionTypes.SPACE) {
+            var stations = new SpaceStationHolder((ServerLevel) event.getObject());
+            event.addCapability(GTCEu.id("space_stations"), new ICapabilitySerializable<CompoundTag>() {
+                @Override
+                public CompoundTag serializeNBT() {
+                    return stations.serializeNBT();
+                }
+
+                @Override
+                public void deserializeNBT(CompoundTag arg) {
+                    stations.deserializeNBT(arg);
+                }
+
+                @Override
+                public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
+                    return GTCapability.CAPABILITY_SPACE_STATIONS.orEmpty(capability, LazyOptional.of(() -> stations));
                 }
             });
         }

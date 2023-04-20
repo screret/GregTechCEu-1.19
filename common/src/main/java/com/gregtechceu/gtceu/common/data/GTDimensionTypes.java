@@ -1,13 +1,14 @@
 package com.gregtechceu.gtceu.common.data;
 
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
+import com.gregtechceu.gtceu.common.worldgen.SpaceLevelSource;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.OptionalLong;
@@ -33,5 +34,6 @@ public class GTDimensionTypes {
                         SPACE_EFFECTS,
                         0.0F,
                         new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
+        GTRegistries.register(Registry.CHUNK_GENERATOR, GTCEu.id("space"), SpaceLevelSource.CODEC);
     }
 }

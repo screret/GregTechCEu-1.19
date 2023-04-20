@@ -1,14 +1,22 @@
 package com.gregtechceu.gtceu.common.entity;
 
+import com.gregtechceu.gtceu.api.blockentity.PipeBlockEntity;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import com.gregtechceu.gtceu.api.satellite.Satellite;
-import com.gregtechceu.gtceu.api.satellite.SatelliteType;
+import com.gregtechceu.gtceu.api.space.satellite.Satellite;
+import com.gregtechceu.gtceu.api.space.satellite.SatelliteType;
 import com.gregtechceu.gtceu.common.data.GTSatellites;
-import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.space.satellite.data.SatelliteData;
 import com.gregtechceu.gtceu.utils.CustomInventory;
+import com.lowdragmc.lowdraglib.syncdata.IManaged;
+import com.lowdragmc.lowdraglib.syncdata.IManagedStorage;
+import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
+import com.lowdragmc.lowdraglib.syncdata.annotation.DropSaved;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.lowdragmc.lowdraglib.syncdata.field.FieldManagedStorage;
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+import com.lowdragmc.lowdraglib.syncdata.managed.IRef;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import lombok.Getter;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -32,60 +40,32 @@ import java.util.UUID;
 /**
  * @author Screret
  * @date 2023/4/15
- * @implNote SpaceShipmentEntity
+ * @implNote SpaceShuttleEntity
  */
-public class SpaceShipmentEntity extends Entity {
-    private static final EntityDataSerializer<Satellite> SATELLITE_SERIALIZER = new EntityDataSerializer<>() {
-        @Override
-        public void write(FriendlyByteBuf buffer, Satellite value) {
-            buffer.writeResourceLocation(GTRegistries.SATELLITES.getKey(value.getType()));
-            buffer.writeResourceKey(value.getLevel());
+public class SpaceShuttleEntity extends Entity implements IManaged {
+    public static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(SpaceShuttleEntity.class);
 
-            buffer.writeFloat(value.getData().locationInWorld().x);
-            buffer.writeFloat(value.getData().locationInWorld().y);
-
-            buffer.writeVarInt(value.getData().range());
-
-            buffer.writeUUID(value.getData().owner());
-        }
-
-        @Override
-        public Satellite read(FriendlyByteBuf buffer) {
-            SatelliteType<?> type = GTRegistries.SATELLITES.get(buffer.readResourceLocation());
-            ResourceKey<Level> levelResourceKey = buffer.readResourceKey(Registry.DIMENSION_REGISTRY);
-
-            float posX = buffer.readFloat();
-            float posY = buffer.readFloat();
-
-            int range = buffer.readVarInt();
-
-            UUID owner = buffer.readUUID();
-            return type.getFactory().create(type, new SatelliteData(new Vec2(posX, posY), range, owner), levelResourceKey);
-        }
-
-        @Override
-        public Satellite copy(Satellite value) {
-            return value.copy();
-        }
-    };
-    private static final EntityDataAccessor<Satellite> DATA_SATELLITE = SynchedEntityData.defineId(SpaceShipmentEntity.class, SATELLITE_SERIALIZER);
-
+    @Getter
+    private final FieldManagedStorage syncStorage = new FieldManagedStorage(this);
 
     @ExpectPlatform
-    public static SpaceShipmentEntity create(EntityType<? extends SpaceShipmentEntity> type, Level level) {
+    public static SpaceShuttleEntity create(EntityType<? extends SpaceShuttleEntity> type, Level level) {
         throw new AssertionError();
     }
 
     @ExpectPlatform
-    public static void onEntityRegister(EntityType<SpaceShipmentEntity> entityType) {
+    public static void onEntityRegister(EntityType<SpaceShuttleEntity> entityType) {
         throw new AssertionError();
     }
 
     @Getter
+    @Persisted
+    @DescSynced
+    @DropSaved
     private Satellite satellite;
     private final CustomInventory inventory = new CustomInventory(9);
 
-    public SpaceShipmentEntity(EntityType<? extends SpaceShipmentEntity> entityType, Level level) {
+    public SpaceShuttleEntity(EntityType<? extends SpaceShuttleEntity> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -97,14 +77,13 @@ public class SpaceShipmentEntity extends Entity {
         return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void defineSynchedData() {
-        this.getEntityData().define(DATA_SATELLITE, GTSatellites.EMPTY.getDefaultInstance());
+    public void setSatellite(Satellite satellite) {
+        this.satellite = satellite;
     }
 
-    public void setSatellite(Satellite satellite) {
-        this.getEntityData().set(DATA_SATELLITE, satellite);
-        this.satellite = satellite;
+    @Override
+    protected void defineSynchedData() {
+
     }
 
     @Override
@@ -123,4 +102,16 @@ public class SpaceShipmentEntity extends Entity {
     public Packet<?> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this);
     }
+
+    @Override
+    public ManagedFieldHolder getFieldHolder() {
+        return MANAGED_FIELD_HOLDER;
+    }
+
+    @Override
+    public void onChanged() {
+        this.saveWithoutId(new CompoundTag());
+    }
+
+
 }

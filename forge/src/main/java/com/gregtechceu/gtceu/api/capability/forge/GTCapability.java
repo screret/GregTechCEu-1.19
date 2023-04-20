@@ -22,6 +22,7 @@ public class GTCapability {
     public static final Capability<IElectricItem> CAPABILITY_ELECTRIC_ITEM = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<ICleanroomReceiver> CAPABILITY_CLEANROOM_RECEIVER = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<ISatelliteHolder> CAPABILITY_SATELLITES = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<ISpaceStationHolder> CAPABILITY_SPACE_STATIONS = CapabilityManager.get(new CapabilityToken<>() {});
 
     public static void register(RegisterCapabilitiesEvent event) {
         event.register(IEnergyContainer.class);
@@ -33,6 +34,7 @@ public class GTCapability {
         event.register(IElectricItem.class);
         event.register(ICleanroomReceiver.class);
         event.register(ISatelliteHolder.class);
+        event.register(ISpaceStationHolder.class);
     }
 
 }

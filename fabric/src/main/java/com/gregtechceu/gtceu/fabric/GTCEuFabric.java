@@ -8,13 +8,14 @@ import com.gregtechceu.gtceu.api.capability.GTCapabilityHelper;
 import com.gregtechceu.gtceu.api.capability.fabric.GTCapability;
 import com.gregtechceu.gtceu.api.machine.feature.IInteractedMachine;
 import com.gregtechceu.gtceu.api.recipe.ingredient.fabric.SizedIngredientImpl;
-import com.gregtechceu.gtceu.api.satellite.capability.SatelliteHolder;
+import com.gregtechceu.gtceu.api.space.satellite.capability.SatelliteHolder;
+import com.gregtechceu.gtceu.api.space.station.capability.SpaceStationHolder;
 import com.gregtechceu.gtceu.common.ServerCommands;
+import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
 import com.gregtechceu.gtceu.common.fabric.CommonProxyImpl;
 import com.gregtechceu.gtceu.data.loader.fabric.OreDataLoaderImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
@@ -60,6 +61,13 @@ public class GTCEuFabric implements ModInitializer {
             }
         });
 
-        ServerWorldEvents.LOAD.register((server, world) -> GTCapability.CAPABILITY_SATELLITES.register(((level, context) -> new SatelliteHolder((ServerLevel) level)), world));
+        ServerWorldEvents.LOAD.register((server, world) -> {
+            if (!world.dimensionType().hasCeiling()) {
+                GTCapability.CAPABILITY_SATELLITES.register(((level, context) -> new SatelliteHolder((ServerLevel) level)), world);
+            }
+            if (world.dimensionTypeId() == GTDimensionTypes.SPACE) {
+                GTCapability.CAPABILITY_SPACE_STATIONS.register(((level, context) -> new SpaceStationHolder((ServerLevel) level)), world);
+            }
+        });
     }
 }

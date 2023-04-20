@@ -41,6 +41,9 @@ public class GTCapability {
     public static final BlockApiLookup<ICleanroomReceiver, Direction> CAPABILITY_CLEANROOM_RECEIVER =
             BlockApiLookup.get(GTCEu.id("cleanroom_receiver"), ICleanroomReceiver.class, Direction.class);
 
-    public static final LevelApiLookup<ISatelliteHolder, Direction> CAPABILITY_SATELLITES =
-            LevelApiLookup.get(GTCEu.id("satellites"), ISatelliteHolder.class, Direction.class);
+    public static final LevelApiLookup<ISatelliteHolder, Void> CAPABILITY_SATELLITES =
+            LevelApiLookup.get(GTCEu.id("satellites"), ISatelliteHolder.class, Void.class);
+
+    public static final LevelApiLookup<ISpaceStationHolder, Void> CAPABILITY_SPACE_STATIONS =
+            LevelApiLookup.get(GTCEu.id("space_stations"), ISpaceStationHolder.class, Void.class);
 }

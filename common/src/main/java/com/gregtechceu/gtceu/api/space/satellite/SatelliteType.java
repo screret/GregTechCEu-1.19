@@ -1,7 +1,7 @@
-package com.gregtechceu.gtceu.api.satellite;
+package com.gregtechceu.gtceu.api.space.satellite;
 
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import com.gregtechceu.gtceu.api.satellite.data.SatelliteData;
+import com.gregtechceu.gtceu.api.space.satellite.data.SatelliteData;
 import lombok.Getter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

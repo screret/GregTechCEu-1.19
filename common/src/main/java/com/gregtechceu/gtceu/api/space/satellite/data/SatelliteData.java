@@ -1,9 +1,6 @@
-package com.gregtechceu.gtceu.api.satellite.data;
+package com.gregtechceu.gtceu.api.space.satellite.data;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntArrayTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.phys.Vec2;
@@ -43,7 +40,7 @@ public record SatelliteData(Vec2 locationInWorld, int range, UUID owner) {
         CompoundTag pos = nbt.getCompound("pos");
         var locationInWorld = new Vec2(pos.getFloat("x"), pos.getFloat("y"));
         int range = nbt.getInt("range");
-        UUID uuid = ExtraCodecs.UUID.parse(NbtOps.INSTANCE, nbt.get("ownerId")).result().orElse(EMPTY_UUID);
+        UUID uuid = nbt.getUUID("ownerId");
         return new SatelliteData(locationInWorld, range, uuid);
     }
 }

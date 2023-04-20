@@ -117,4 +117,9 @@ public class GTCapabilityHelperImpl {
     public static ISatelliteHolder getSatellites(Level level) {
         return level.getCapability(GTCapability.CAPABILITY_SATELLITES).resolve().orElse(null);
     }
+
+    @Nullable
+    public static ISpaceStationHolder getSpaceStations(Level level) {
+        return level.getCapability(GTCapability.CAPABILITY_SPACE_STATIONS).resolve().orElse(null);
+    }
 }
