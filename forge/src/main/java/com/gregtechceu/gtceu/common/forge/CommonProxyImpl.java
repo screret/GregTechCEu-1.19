@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.registry.forge.GTRegistriesImpl;
 import com.gregtechceu.gtceu.common.CommonProxy;
+import com.gregtechceu.gtceu.common.data.forge.GTBiomesImpl;
 import com.gregtechceu.gtceu.common.data.forge.GTFeaturesImpl;
 import com.gregtechceu.gtceu.integration.top.forge.TheOneProbePluginImpl;
 import com.gregtechceu.gtceu.api.capability.forge.GTCapability;
@@ -35,6 +36,7 @@ public class CommonProxyImpl {
         eventBus.register(this);
         GTRegistriesImpl.init(eventBus);
         GTFeaturesImpl.init(eventBus);
+        GTBiomesImpl.register(eventBus);
         // init common features
         if (GTCEu.isKubeJSLoaded()) {
             synchronized (LOCK) {

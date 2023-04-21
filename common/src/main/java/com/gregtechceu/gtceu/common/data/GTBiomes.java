@@ -1,29 +1,25 @@
 package com.gregtechceu.gtceu.common.data;
 
 import com.gregtechceu.gtceu.GTCEu;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.biome.OverworldBiomes;
-import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import org.jetbrains.annotations.Nullable;
 
 public class GTBiomes {
 
     public static final ResourceKey<Biome> SPACE = ResourceKey.create(Registry.BIOME_REGISTRY, GTCEu.id("space"));
 
-
+    @ExpectPlatform
     public static void init() {
-        BuiltinRegistries.register(BuiltinRegistries.BIOME, SPACE, GTBiomes.space());
+        throw new AssertionError();
     }
 
     public static Biome space() {
         BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder();
-        builder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, MiscOverworldPlacements.VOID_START_PLATFORM);
         return biome(Biome.Precipitation.NONE, 0.5F, 0.5F, new MobSpawnSettings.Builder(), builder, null);
     }
 

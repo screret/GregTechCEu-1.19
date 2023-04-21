@@ -65,7 +65,7 @@ public class GTCEuFabric implements ModInitializer {
             if (!world.dimensionType().hasCeiling()) {
                 GTCapability.CAPABILITY_SATELLITES.register(((level, context) -> new SatelliteHolder((ServerLevel) level)), world);
             }
-            if (world.dimensionTypeId() == GTDimensionTypes.SPACE) {
+            if (world.dimensionTypeId() == GTDimensionTypes.SPACE_DIMENSION) {
                 GTCapability.CAPABILITY_SPACE_STATIONS.register(((level, context) -> new SpaceStationHolder((ServerLevel) level)), world);
             }
         });

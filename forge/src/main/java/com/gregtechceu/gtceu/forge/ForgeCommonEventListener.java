@@ -115,7 +115,7 @@ public class ForgeCommonEventListener {
                 }
             });
         }
-        if (event.getObject().dimensionTypeId() == GTDimensionTypes.SPACE) {
+        if (event.getObject().dimensionTypeId() == GTDimensionTypes.SPACE_DIMENSION) {
             var stations = new SpaceStationHolder((ServerLevel) event.getObject());
             event.addCapability(GTCEu.id("space_stations"), new ICapabilitySerializable<CompoundTag>() {
                 @Override

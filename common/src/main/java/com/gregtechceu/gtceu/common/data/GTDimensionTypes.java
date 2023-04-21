@@ -14,11 +14,11 @@ import net.minecraft.world.level.dimension.DimensionType;
 import java.util.OptionalLong;
 
 public class GTDimensionTypes {
-    public static final ResourceKey<DimensionType> SPACE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, GTCEu.id("space"));
+    public static final ResourceKey<DimensionType> SPACE_DIMENSION = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, GTCEu.id("space"));
     public static final ResourceLocation SPACE_EFFECTS = GTCEu.id("space");
 
     public static void init() {
-        BuiltinRegistries.register(BuiltinRegistries.DIMENSION_TYPE, SPACE,
+        BuiltinRegistries.register(BuiltinRegistries.DIMENSION_TYPE, SPACE_DIMENSION,
                 new DimensionType(OptionalLong.of(18000L),
                         true,
                         false,
