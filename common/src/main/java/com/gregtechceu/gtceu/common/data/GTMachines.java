@@ -31,6 +31,7 @@ import com.gregtechceu.gtceu.common.block.CoilBlock;
 import com.gregtechceu.gtceu.common.machine.electric.BatteryBufferMachine;
 import com.gregtechceu.gtceu.common.machine.electric.PumpMachine;
 import com.gregtechceu.gtceu.common.machine.electric.TransformerMachine;
+import com.gregtechceu.gtceu.common.machine.multiblock.StructurePackageScannerMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.CrackerMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.ElectricBlastFurnaceMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.SatelliteLaunchSystemMachine;
@@ -1262,114 +1263,15 @@ public class GTMachines {
             .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
             .recipeType(GTRecipeTypes.SPACE_SHUTTLE_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "   X X   ",
-                            "         ",
-                            "   X X   ",
-                            "         ",
-                            "   X X   ",
-                            "         ",
-                            "   X X   ",
-                            "         ",
-                            "   X X   ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "   XXX   ",
-                            "   X X   ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "         ",
-                            "    T    ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "   XXX   ",
-                            "         ",
-                            "         ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "         ",
-                            "    T    ",
-                            "    T    ",
-                            "    T    ",
-                            "         ",
-                            "         ",
-                            "   XXX   ",
-                            "         ",
-                            "         ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "    A    ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "    B    ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "         ",
-                            "   A A   ",
-                            " TTTTTTT ",
-                            " TTT TTT ",
-                            "  TT TT  ",
-                            "  TT TT  ",
-                            "   T T   ",
-                            "   T T   ",
-                            "   T T   ",
-                            "   B B   ",
-                            "    B    ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCCCCCC",
-                            "    A    ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "   TTT   ",
-                            "    B    ",
-                            "         ")
-                    .aisle( "CCCCCCCCC",
-                            "CCCCSCCCC",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ",
-                            "         ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "   X X   ", "   XXX   ", "   X X   ", "   XXX   ", "   X X   ", "   XXX   ", "   X X   ", "   XXX   ", "   X X   ", "         ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "   X X   ", "         ", "   X X   ", "         ", "   X X   ", "         ", "   X X   ", "         ", "   X X   ", "         ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "   X X   ", "   XXX   ", "   X X   ", "   XXX   ", "   X X   ", "   XXX   ", "   X X   ", "   XXX   ", "   X X   ", "         ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "         ", "    T    ", "         ", "         ", "         ", "         ", "   XXX   ", "         ", "         ", "         ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "         ", "    T    ", "    T    ", "    T    ", "         ", "         ", "   XXX   ", "         ", "         ", "         ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "    A    ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "    B    ", "         ")
+                    .aisle("CCCCCCCCC", "         ", "   A A   ", " TTTTTTT ", " TTT TTT ", "  TT TT  ", "  TT TT  ", "   T T   ", "   T T   ", "   T T   ", "   B B   ", "    B    ")
+                    .aisle("CCCCCCCCC", "CCCCCCCCC", "    A    ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "   TTT   ", "    B    ", "         ")
+                    .aisle("CCCCCCCCC", "CCCCSCCCC", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
                     .where('S', Predicates.controller(blocks(definition.getBlock())))
                     .where(' ', Predicates.air())
                     .where('C', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(110)
@@ -1380,6 +1282,21 @@ public class GTMachines {
                     .where('B', blocks(MATERIAL_BLOCKS.get(TagPrefix.block, GTMaterials.PolyOxydiphenylenePyromellitimide).get()))
                     .build())
             .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
+                    GTCEu.id("block/multiblock/assembly_line"), false)
+            .register();
+
+    public static final MultiblockMachineDefinition STRUCTURE_PACKAGE_SCANNER = REGISTRATE.multiblock("structure_package_scanner", StructurePackageScannerMachine::new)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("SCCCCCC", "C      ", "C      ", "C      ", "C      ")
+                    .aisle("C      ", "       ", "       ", "       ", "       ").setRepeatable(4)
+                    .where('S', Predicates.controller(blocks(definition.getBlock())))
+                    .where(' ', Predicates.any())
+                    .where('C', blocks(MATERIAL_BLOCKS.get(TagPrefix.block, GTMaterials.Steel).get())
+                        .or(Predicates.autoAbilities(definition.getRecipeType())))
+            .build())
+            .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_solid_steel"),
                     GTCEu.id("block/multiblock/assembly_line"), false)
             .register();
 
