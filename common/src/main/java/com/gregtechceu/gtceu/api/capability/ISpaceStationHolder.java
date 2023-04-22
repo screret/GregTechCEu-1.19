@@ -41,4 +41,6 @@ public interface ISpaceStationHolder {
     void destroyStation(int id);
 
     int getFreeStationId();
+
+    Vec2 getFreeStationPos(int stationId);
 }

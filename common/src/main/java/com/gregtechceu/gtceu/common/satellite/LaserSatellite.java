@@ -21,7 +21,6 @@ import net.minecraft.world.phys.AABB;
 
 public class LaserSatellite extends Satellite {
     private int currentMinedY;
-    @Persisted
     private boolean isMining = false;
 
     public LaserSatellite(SatelliteType<?> type, SatelliteData data, ResourceKey<Level> level) {
@@ -30,6 +29,7 @@ public class LaserSatellite extends Satellite {
 
     @Override
     public void tickSatellite(Level level) {
+        if (isNonWorking()) return;
         if (isMining) {
             if (level.getGameTime() % ConfigHolder.machines.laserSatelliteMiningTickStep == 0) {
                 float x = this.data.locationInWorld().x;

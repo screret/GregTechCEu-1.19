@@ -48,6 +48,7 @@ public class CustomTags {
     public static final TagKey<Item> UHV_BATTERIES = TagUtil.createPlatformItemTag("batteries/uhv", "uhv_batteries");
 
     public static final TagKey<Item> SATELLITES = TagUtil.createModItemTag("satellites");
+    public static final TagKey<Item> OXYGENATED_ARMOR = TagUtil.createModItemTag("oxygenated_armor");
 
     public static final TagKey<Block> INFINIBURN_SPACE = TagUtil.createModBlockTag("infiniburn_space");
 

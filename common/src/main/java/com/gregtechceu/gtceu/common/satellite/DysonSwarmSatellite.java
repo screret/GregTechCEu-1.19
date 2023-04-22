@@ -20,6 +20,7 @@ public class DysonSwarmSatellite extends Satellite {
 
     @Override
     public void tickSatellite(Level level) {
+        if (isNonWorking()) return;
 
     }
 

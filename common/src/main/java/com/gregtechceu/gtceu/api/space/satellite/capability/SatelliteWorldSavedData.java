@@ -1,12 +1,13 @@
 package com.gregtechceu.gtceu.api.space.satellite.capability;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.capability.ISatelliteHolder;
 import com.gregtechceu.gtceu.api.space.satellite.Satellite;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec2;
 
 import javax.annotation.Nullable;
@@ -15,12 +16,23 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SatelliteHolder implements ISatelliteHolder {
+public class SatelliteWorldSavedData extends SavedData implements ISatelliteHolder {
+    @Nullable
+    public static SatelliteWorldSavedData getOrCreate(ServerLevel serverLevel) {
+        if (serverLevel.dimensionType().hasCeiling()) return null;
+        return serverLevel.getDataStorage().computeIfAbsent(tag -> new SatelliteWorldSavedData(serverLevel, tag), () -> new SatelliteWorldSavedData(serverLevel), GTCEu.MOD_ID + "_satellites");
+    }
+
     private final List<Satellite> satellites = new ArrayList<>();
     private final ServerLevel level;
 
-    public SatelliteHolder(ServerLevel level) {
+    public SatelliteWorldSavedData(ServerLevel level) {
         this.level = level;
+    }
+
+    public SatelliteWorldSavedData(ServerLevel level, CompoundTag tag) {
+        this.level = level;
+        this.load(tag);
     }
 
     @Override
@@ -53,17 +65,20 @@ public class SatelliteHolder implements ISatelliteHolder {
         satellites.remove(satellite);
     }
 
-    public ListTag serializeNBT() {
+    @Override
+    public CompoundTag save(CompoundTag compoundTag) {
         ListTag tag = new ListTag();
         for (Satellite satellite : satellites) {
             tag.add(satellite.serializeNBT());
         }
-        return tag;
+        compoundTag.put("satellites", tag);
+        return compoundTag;
     }
 
-    public void deserializeNBT(ListTag arg, Level level) {
-        for (Tag tag : arg) {
+    public void load(CompoundTag compoundTag) {
+        for (Tag tag : compoundTag.getList("satellites", Tag.TAG_COMPOUND)) {
             satellites.add(Satellite.deserializeNBT((CompoundTag) tag, level));
         }
     }
+
 }

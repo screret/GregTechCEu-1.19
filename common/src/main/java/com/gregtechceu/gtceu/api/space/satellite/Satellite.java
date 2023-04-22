@@ -29,6 +29,9 @@ public abstract class Satellite {
     @Getter
     @Setter
     protected boolean jammed;
+    @Getter
+    @Setter
+    protected boolean needsRepair;
 
     public Satellite(SatelliteType<?> type, SatelliteData data, ResourceKey<Level> level) {
         this.type = type;
@@ -43,10 +46,14 @@ public abstract class Satellite {
         return copy;
     }
 
+    public boolean isNonWorking() {
+        return jammed || needsRepair;
+    }
+
     public abstract void tickSatellite(Level level);
 
     public boolean runSatellite(Level level) {
-        if (jammed) return false;
+        if (jammed || needsRepair) return false;
         return runSatelliteFunction(level);
     }
     public abstract boolean runSatelliteFunction(Level level);

@@ -1,9 +1,12 @@
 package com.gregtechceu.gtceu.api.capability;
 
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.space.satellite.capability.SatelliteWorldSavedData;
+import com.gregtechceu.gtceu.api.space.station.capability.StationWorldSavedData;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -57,10 +60,9 @@ public class GTCapabilityHelper {
         throw new AssertionError();
     }
 
-    @ExpectPlatform
     @Nullable
-    public static ISatelliteHolder getSatellites(Level level) {
-        throw new AssertionError();
+    public static ISatelliteHolder getSatellites(ServerLevel level) {
+        return SatelliteWorldSavedData.getOrCreate(level);
     }
 
     @ExpectPlatform
@@ -77,7 +79,7 @@ public class GTCapabilityHelper {
 
     @ExpectPlatform
     @Nullable
-    public static ISpaceStationHolder getSpaceStations(Level level) {
-        throw new AssertionError();
+    public static ISpaceStationHolder getSpaceStations(ServerLevel level) {
+        return StationWorldSavedData.getOrCreate(level);
     }
 }

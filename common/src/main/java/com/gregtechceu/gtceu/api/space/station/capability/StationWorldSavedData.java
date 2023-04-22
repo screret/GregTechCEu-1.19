@@ -1,28 +1,44 @@
 package com.gregtechceu.gtceu.api.space.station.capability;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.capability.ISpaceStationHolder;
-import com.gregtechceu.gtceu.api.space.satellite.Satellite;
+import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
+import com.gregtechceu.gtceu.common.item.IdChipBehaviour;
 import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec2;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SpaceStationHolder implements ISpaceStationHolder {
+public class StationWorldSavedData extends SavedData implements ISpaceStationHolder {
+    @Nullable
+    public static StationWorldSavedData getOrCreate(ServerLevel serverLevel) {
+        if (serverLevel.dimension() != GTDimensionTypes.SPACE_LEVEL) return null;
+        return serverLevel.getDataStorage().computeIfAbsent(tag -> new StationWorldSavedData(serverLevel, tag), () -> new StationWorldSavedData(serverLevel), GTCEu.MOD_ID + "_space_stations");
+    }
+
     private final Int2ObjectMap<Vec2> stations = new Int2ObjectLinkedOpenHashMap<>(1);
+    private final Int2ObjectMap<Vec2> freeStationPositions = new Int2ObjectLinkedOpenHashMap<>(IdChipBehaviour.ID_MAX * IdChipBehaviour.ID_MAX);
     private final ServerLevel level;
 
-    public SpaceStationHolder(ServerLevel level) {
+    public StationWorldSavedData(ServerLevel level) {
         this.level = level;
+        for (int x = 0; x < IdChipBehaviour.ID_MAX; ++x) {
+            for (int y = 0; y < IdChipBehaviour.ID_MAX; ++y) {
+                freeStationPositions.put(y + x * IdChipBehaviour.ID_MAX, new Vec2(x, y));
+            }
+        }
+    }
+
+    public StationWorldSavedData(ServerLevel level, CompoundTag tag) {
+        this(level);
+        this.load(tag);
     }
 
     @Override
@@ -38,7 +54,7 @@ public class SpaceStationHolder implements ISpaceStationHolder {
 
     @Override
     public Vec2 getStationPos(int id) {
-        return stations.get(id);
+        return stations.getOrDefault(id, Vec2.NEG_UNIT_Y);
     }
 
     @Nullable
@@ -50,10 +66,12 @@ public class SpaceStationHolder implements ISpaceStationHolder {
     @Override
     public void addStation(int stationId, Vec2 pos) {
         stations.put(stationId, pos);
+        freeStationPositions.remove(stationId, pos);
     }
 
     @Override
     public void destroyStation(int id) {
+        freeStationPositions.put(id, stations.get(id));
         stations.remove(id);
     }
 
@@ -62,7 +80,23 @@ public class SpaceStationHolder implements ISpaceStationHolder {
         return stations.size();
     }
 
-    public CompoundTag serializeNBT() {
+    @Override
+    public Vec2 getFreeStationPos(int stationId) {
+        return freeStationPositions.getOrDefault(stationId, Vec2.NEG_UNIT_Y);
+    }
+
+    public void load(CompoundTag arg) {
+        for (String name : arg.getCompound("stations").getAllKeys()) {
+            CompoundTag tag = arg.getCompound(name);
+            Vec2 pos = new Vec2(tag.getInt("x"), tag.getInt("z"));
+            int id = Integer.parseInt(name);
+            stations.put(id, pos);
+            freeStationPositions.remove(id);
+        }
+    }
+
+    @Override
+    public CompoundTag save(CompoundTag compoundTag) {
         CompoundTag tag = new CompoundTag();
         for (Int2ObjectMap.Entry<Vec2> station : stations.int2ObjectEntrySet()) {
             CompoundTag pos = new CompoundTag();
@@ -70,14 +104,7 @@ public class SpaceStationHolder implements ISpaceStationHolder {
             pos.putInt("z", (int) station.getValue().y);
             tag.put(Integer.toString(station.getIntKey()), pos);
         }
-        return tag;
-    }
-
-    public void deserializeNBT(CompoundTag arg) {
-        for (String name : arg.getAllKeys()) {
-            CompoundTag tag = arg.getCompound(name);
-            Vec2 pos = new Vec2(tag.getInt("x"), tag.getInt("z"));
-            stations.put(Integer.valueOf(name).intValue(), pos);
-        }
+        compoundTag.put("stations", tag);
+        return compoundTag;
     }
 }

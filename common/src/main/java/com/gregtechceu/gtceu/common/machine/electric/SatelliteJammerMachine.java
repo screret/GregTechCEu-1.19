@@ -21,6 +21,7 @@ import lombok.Setter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
 
@@ -35,7 +36,7 @@ public class SatelliteJammerMachine extends TieredEnergyMachine implements ICont
     @Getter
     @Setter
     private boolean isWorkingEnabled;
-    private int range;
+    private final int range;
     @Getter
     @DescSynced
     private int lastJammedCount;
@@ -49,13 +50,6 @@ public class SatelliteJammerMachine extends TieredEnergyMachine implements ICont
     }
 
     @Override
-    protected NotifiableEnergyContainer createEnergyContainer(Object... args) {
-        var energyContainer = super.createEnergyContainer(args);
-        energyContainer.setSideOutputCondition(side -> !hasFrontFacing() || side == getFrontFacing());
-        return energyContainer;
-    }
-
-    @Override
     public int tintColor(int index) {
         if (index == 2) {
             return GTValues.VC[getTier()];
@@ -66,7 +60,13 @@ public class SatelliteJammerMachine extends TieredEnergyMachine implements ICont
     @Override
     public void onLoad() {
         super.onLoad();
-        subscribeServerTick(this::jamSatellites);
+        if (!this.getLevel().dimensionType().hasCeiling()) subscribeServerTick(this::jamSatellites);
+        else this.setWorkingEnabled(false);
+    }
+
+    @Override
+    public void onUnload() {
+        super.onUnload();
     }
 
     @Override
@@ -75,23 +75,25 @@ public class SatelliteJammerMachine extends TieredEnergyMachine implements ICont
     }
 
     protected void jamSatellites() {
-        BlockPos myPos = this.getPos();
-        List<Satellite> toJam = GTCapabilityHelper.getSatellites(this.holder.level()).getSatellitesNearPos(new Vec2(myPos.getX(), myPos.getZ()), range);
+        if (!this.getLevel().isClientSide) {
+            BlockPos myPos = this.getPos();
+            List<Satellite> toJam = GTCapabilityHelper.getSatellites((ServerLevel) this.getLevel()).getSatellitesNearPos(new Vec2(myPos.getX(), myPos.getZ()), range);
 
-        if (toJam.size() > 0) {
-            List<Satellite> copy = new ArrayList<>(lastJammed);
-            copy.removeAll(toJam);
-            copy.forEach(satellite -> satellite.setJammed(false));
-            toJam.removeAll(lastJammed);
-            if (!this.isWorkingEnabled) {
-                return;
-            }
+            if (toJam.size() > 0) {
+                List<Satellite> copy = new ArrayList<>(lastJammed);
+                copy.removeAll(toJam);
+                copy.forEach(satellite -> satellite.setJammed(false));
+                toJam.removeAll(lastJammed);
+                if (!this.isWorkingEnabled) {
+                    return;
+                }
 
-            lastJammed.clear();
-            lastJammedCount = toJam.size();
-            for (Satellite satellite : toJam) {
-                satellite.setJammed(true);
-                lastJammed.add(satellite);
+                lastJammed.clear();
+                lastJammedCount = toJam.size();
+                for (Satellite satellite : toJam) {
+                    satellite.setJammed(true);
+                    lastJammed.add(satellite);
+                }
             }
         }
 

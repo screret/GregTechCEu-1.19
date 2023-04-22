@@ -10,7 +10,6 @@ import com.gregtechceu.gtceu.api.capability.IMiner;
 import com.gregtechceu.gtceu.api.capability.PlatformEnergyCompat;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
 import com.gregtechceu.gtceu.api.item.DrumMachineItem;
 import com.gregtechceu.gtceu.api.machine.*;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IRotorHolderMachine;
@@ -31,7 +30,6 @@ import com.gregtechceu.gtceu.common.block.CoilBlock;
 import com.gregtechceu.gtceu.common.machine.electric.BatteryBufferMachine;
 import com.gregtechceu.gtceu.common.machine.electric.PumpMachine;
 import com.gregtechceu.gtceu.common.machine.electric.TransformerMachine;
-import com.gregtechceu.gtceu.common.machine.multiblock.StructurePackageScannerMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.CrackerMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.ElectricBlastFurnaceMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.SatelliteLaunchSystemMachine;
@@ -39,6 +37,7 @@ import com.gregtechceu.gtceu.common.machine.electric.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeCombustionEngineMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeTurbineMachine;
+import com.gregtechceu.gtceu.common.machine.multiblock.electric.space.SpaceShuttleMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.part.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.primitive.CokeOvenMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.primitive.PrimitiveBlastFurnaceMachine;
@@ -1258,7 +1257,7 @@ public class GTMachines {
             GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel"),
             GTCEu.id("block/multiblock/generator/large_plasma_turbine"));
 
-    public static final MultiblockMachineDefinition SPACE_SHUTTLE = REGISTRATE.multiblock("space_shuttle", SatelliteLaunchSystemMachine::new)
+    public static final MultiblockMachineDefinition SPACE_SHUTTLE = REGISTRATE.multiblock("space_shuttle", SpaceShuttleMachine::new)
             .rotationState(RotationState.NON_Y_AXIS)
             .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
             .recipeType(GTRecipeTypes.SPACE_SHUTTLE_RECIPES)
@@ -1285,19 +1284,21 @@ public class GTMachines {
                     GTCEu.id("block/multiblock/assembly_line"), false)
             .register();
 
-    public static final MultiblockMachineDefinition STRUCTURE_PACKAGE_SCANNER = REGISTRATE.multiblock("structure_package_scanner", StructurePackageScannerMachine::new)
+    public static final MultiblockMachineDefinition DRONE_HANGAR = REGISTRATE.multiblock("drone_hangar", WorkableElectricMultiblockMachine::new)
             .rotationState(RotationState.NON_Y_AXIS)
-            .appearanceBlock(CASING_TUNGSTENSTEEL_ROBUST)
+            .recipeType(GTRecipeTypes.VACUUM_RECIPES)
+            .appearanceBlock(CASING_ALUMINIUM_FROSTPROOF)
             .pattern(definition -> FactoryBlockPattern.start()
-                    .aisle("SCCCCCC", "C      ", "C      ", "C      ", "C      ")
-                    .aisle("C      ", "       ", "       ", "       ", "       ").setRepeatable(4)
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "X#X", "XXX")
+                    .aisle("XXX", "XSX", "XXX")
                     .where('S', Predicates.controller(blocks(definition.getBlock())))
-                    .where(' ', Predicates.any())
-                    .where('C', blocks(MATERIAL_BLOCKS.get(TagPrefix.block, GTMaterials.Steel).get())
-                        .or(Predicates.autoAbilities(definition.getRecipeType())))
-            .build())
-            .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_solid_steel"),
-                    GTCEu.id("block/multiblock/assembly_line"), false)
+                    .where('X', blocks(CASING_ALUMINIUM_FROSTPROOF.get()).setMinGlobalLimited(14)
+                            .or(Predicates.autoAbilities(definition.getRecipeType())))
+                    .where('#', Predicates.air())
+                    .build())
+            .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_frost_proof"),
+                    GTCEu.id("block/multiblock/vacuum_freezer"), false)
             .register();
 
     //////////////////////////////////////

@@ -13,6 +13,7 @@
     "BlockBehaviourAccessor",
     "ChunkMixin",
     "IFoliagePlacerTypeAccessor",
+    "ILevelAccessor",
     "IHolderReferenceAccessor",
     "ITrunkPlacerTypeAccessor",
     "LevelMixin",

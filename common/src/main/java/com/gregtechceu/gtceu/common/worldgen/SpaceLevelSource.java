@@ -1,5 +1,6 @@
 package com.gregtechceu.gtceu.common.worldgen;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.common.data.GTBiomes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -39,6 +40,8 @@ public class SpaceLevelSource extends ChunkGenerator {
     });
 
     private final Registry<Biome> biomes;
+
+    public static final int PLATFORM_HEIGHT = 63;
 
     public SpaceLevelSource(Registry<StructureSet> structures, Registry<Biome> biomes) {
         super(structures, Optional.empty(), new FixedBiomeSource(biomes.getHolderOrThrow(GTBiomes.SPACE)));
@@ -108,14 +111,16 @@ public class SpaceLevelSource extends ChunkGenerator {
         int chunkZ = chunkPos.z;
 
         if (chunkX % 16 == 0 && chunkZ % 16 == 0) {
+            GTCEu.LOGGER.info("made platform");
             for(int x = -4; x < 4; ++x) {
                 for(int z = -4; z < 4; ++z) {
                     int blockX = SectionPos.sectionToBlockCoord(chunkX, x);
                     int blockZ = SectionPos.sectionToBlockCoord(chunkZ, z);
-                    level.setBlock(mutableBlockPos.set(blockX, 63, blockZ), Blocks.GRAY_CONCRETE.defaultBlockState(), 2);
+                    level.setBlock(mutableBlockPos.set(blockX, PLATFORM_HEIGHT, blockZ), Blocks.GRAY_CONCRETE.defaultBlockState(), 2);
                 }
             }
-        }else if (chunkX % 16 != 8 && chunkZ % 16 == 8) {
+        }else if ((chunkX % 16 != 8 && chunkZ % 16 == 8) || (chunkX % 16 != -8 && chunkZ % 16 == -8)) {
+            GTCEu.LOGGER.info("made Z edge");
             for(int x = 0; x < 16; ++x) {
                 int blockX = SectionPos.sectionToBlockCoord(chunkX, x);
                 int blockZ = SectionPos.sectionToBlockCoord(chunkZ, 15);
@@ -123,7 +128,8 @@ public class SpaceLevelSource extends ChunkGenerator {
                     level.setBlock(mutableBlockPos.set(blockX, y, blockZ), Blocks.BARRIER.defaultBlockState(), 2);
                 }
             }
-        } else if (chunkX % 16 == 8 && chunkZ % 16 != 8) {
+        } else if ((chunkX % 16 == 8 && chunkZ % 16 != 8) || (chunkX % 16 == -8 && chunkZ % 16 != -8)) {
+            GTCEu.LOGGER.info("made X edge");
             for(int z = 0; z < 16; ++z) {
                 int blockX = SectionPos.sectionToBlockCoord(chunkX, 15);
                 int blockZ = SectionPos.sectionToBlockCoord(chunkZ, z);
@@ -132,11 +138,28 @@ public class SpaceLevelSource extends ChunkGenerator {
                 }
             }
         } else if (chunkX % 16 == 8 && chunkZ % 16 == 8) {
+            GTCEu.LOGGER.info("made corner positive");
             for(int z = 0; z < 16; ++z) {
                 int blockX = SectionPos.sectionToBlockCoord(chunkX, 15);
                 int blockZ = SectionPos.sectionToBlockCoord(chunkZ, z);
                 for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); ++y) {
                     if (z == 15) {
+                        for (int x = 0; x < 16; ++x) {
+                            blockX = SectionPos.sectionToBlockCoord(chunkX, x);
+                            level.setBlock(mutableBlockPos.set(blockX, y, blockZ), Blocks.BARRIER.defaultBlockState(), 2);
+                        }
+                    } else {
+                        level.setBlock(mutableBlockPos.set(blockX, y, blockZ), Blocks.BARRIER.defaultBlockState(), 2);
+                    }
+                }
+            }
+        } else if (chunkX % 16 == -8 && chunkZ % 16 == -8) {
+            GTCEu.LOGGER.info("made corner negative");
+            for(int z = 0; z < 16; ++z) {
+                int blockX = SectionPos.sectionToBlockCoord(chunkX, 15);
+                int blockZ = SectionPos.sectionToBlockCoord(chunkZ, z);
+                for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); ++y) {
+                    if (z == 0) {
                         for (int x = 0; x < 16; ++x) {
                             blockX = SectionPos.sectionToBlockCoord(chunkX, x);
                             level.setBlock(mutableBlockPos.set(blockX, y, blockZ), Blocks.BARRIER.defaultBlockState(), 2);

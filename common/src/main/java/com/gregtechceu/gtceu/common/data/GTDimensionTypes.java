@@ -9,12 +9,14 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.OptionalLong;
 
 public class GTDimensionTypes {
     public static final ResourceKey<DimensionType> SPACE_DIMENSION = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, GTCEu.id("space"));
+    public static final ResourceKey<Level> SPACE_LEVEL = ResourceKey.create(Registry.DIMENSION_REGISTRY, GTCEu.id("space"));
     public static final ResourceLocation SPACE_EFFECTS = GTCEu.id("space");
 
     public static void init() {

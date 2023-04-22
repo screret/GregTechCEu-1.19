@@ -209,4 +209,10 @@ public class ConfigHolder {
         public int defaultPaintingColor = 0xFFFFFF;
     }
 
+    public static class ServerConfigs {
+        public boolean enableOxygen = true;
+        public float oxygenDamage = 1.0F;
+        public int maxOxygenatedBlockChecks = 128;
+    }
+
 }

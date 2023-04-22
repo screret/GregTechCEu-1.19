@@ -9,21 +9,16 @@ import com.gregtechceu.gtceu.api.item.forge.ComponentItemImpl;
 import com.gregtechceu.gtceu.api.item.forge.DrumMachineItemImpl;
 import com.gregtechceu.gtceu.api.machine.feature.IInteractedMachine;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
-import com.gregtechceu.gtceu.api.space.satellite.capability.SatelliteHolder;
-import com.gregtechceu.gtceu.api.space.station.capability.SpaceStationHolder;
 import com.gregtechceu.gtceu.common.ServerCommands;
 import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
 import com.gregtechceu.gtceu.data.loader.forge.OreDataLoaderImpl;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -96,7 +91,7 @@ public class ForgeCommonEventListener {
 
     @SubscribeEvent
     public static void registerLevelCapabilities(AttachCapabilitiesEvent<Level> event) {
-        if (!event.getObject().dimensionType().hasCeiling() && !event.getObject().isClientSide) {
+        /*if (!event.getObject().dimensionType().hasCeiling() && !event.getObject().isClientSide) {
             var satellites = new SatelliteHolder((ServerLevel) event.getObject());
             event.addCapability(GTCEu.id("satellites"), new ICapabilitySerializable<ListTag>() {
                 @Override
@@ -133,13 +128,13 @@ public class ForgeCommonEventListener {
                     return GTCapability.CAPABILITY_SPACE_STATIONS.orEmpty(capability, LazyOptional.of(() -> stations));
                 }
             });
-        }
+        }*/
     }
 
     @SubscribeEvent
     public static void serverTick(TickEvent.LevelTickEvent event) {
         if (event.side == LogicalSide.SERVER && !event.level.dimensionType().hasCeiling()) {
-            var sat = GTCapabilityHelper.getSatellites(event.level);
+            var sat = GTCapabilityHelper.getSatellites((ServerLevel) event.level);
             if (sat != null) sat.tickSatellites();
         }
     }

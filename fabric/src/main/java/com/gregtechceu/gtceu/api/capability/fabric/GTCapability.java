@@ -5,8 +5,6 @@ import com.gregtechceu.gtceu.api.capability.*;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.common.machine.trait.ConverterTrait;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
-import net.fabricmc.fabric.api.lookup.v1.custom.ApiLookupMap;
-import net.fabricmc.fabric.api.lookup.v1.entity.EntityApiLookup;
 import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.minecraft.core.Direction;
@@ -41,8 +39,8 @@ public class GTCapability {
     public static final BlockApiLookup<ICleanroomReceiver, Direction> CAPABILITY_CLEANROOM_RECEIVER =
             BlockApiLookup.get(GTCEu.id("cleanroom_receiver"), ICleanroomReceiver.class, Direction.class);
 
-    public static final LevelApiLookup<ISatelliteHolder, Void> CAPABILITY_SATELLITES =
-            LevelApiLookup.get(GTCEu.id("satellites"), ISatelliteHolder.class, Void.class);
+    //public static final LevelApiLookup<ISatelliteHolder, Void> CAPABILITY_SATELLITES =
+    //        LevelApiLookup.get(GTCEu.id("satellites"), ISatelliteHolder.class, Void.class);
 
     public static final LevelApiLookup<ISpaceStationHolder, Void> CAPABILITY_SPACE_STATIONS =
             LevelApiLookup.get(GTCEu.id("space_stations"), ISpaceStationHolder.class, Void.class);

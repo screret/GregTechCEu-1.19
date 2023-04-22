@@ -74,6 +74,7 @@ public class GuiTextures {
     public static final ResourceTexture BUTTON_WORKING_ENABLE = new ResourceTexture("gtceu:textures/gui/widget/button_working_enable.png");
     public static final ResourceTexture BUTTON_INT_CIRCUIT_PLUS = new ResourceTexture("gtceu:textures/gui/widget/button_circuit_plus.png");
     public static final ResourceTexture BUTTON_INT_CIRCUIT_MINUS = new ResourceTexture("gtceu:textures/gui/widget/button_circuit_minus.png");
+    public static final ResourceTexture BUTTON_LAUNCH_ROCKET = new ResourceTexture("gtceu:textures/gui/widget/button_launch_rocket.png");
     public static final ResourceTexture CLIPBOARD_BUTTON = new ResourceTexture("gtceu:textures/gui/widget/clipboard_button.png");
     public static final ResourceBorderTexture CLIPBOARD_TEXT_BOX = new ResourceBorderTexture("gtceu:textures/gui/widget/clipboard_text_box.png", 9, 18, 1, 1);
     public static final ResourceTexture DISTRIBUTION_MODE = new ResourceTexture("gtceu:textures/gui/widget/button_distribution_mode.png");

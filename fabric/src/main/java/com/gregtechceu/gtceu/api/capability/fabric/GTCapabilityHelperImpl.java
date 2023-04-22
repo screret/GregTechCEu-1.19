@@ -69,7 +69,7 @@ public class GTCapabilityHelperImpl {
         return GTCapability.CAPABILITY_CLEANROOM_RECEIVER.find(level, pos, side);
     }
 
-    @Nullable
+    /*@Nullable
     public static ISatelliteHolder getSatellites(Level level) {
         return GTCapability.CAPABILITY_SATELLITES.find(level, null);
     }
@@ -77,5 +77,5 @@ public class GTCapabilityHelperImpl {
     @Nullable
     public static ISpaceStationHolder getSpaceStations(Level level) {
         return GTCapability.CAPABILITY_SPACE_STATIONS.find(level, null);
-    }
+    }*/
 }

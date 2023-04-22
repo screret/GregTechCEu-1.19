@@ -1,6 +1,7 @@
 package com.gregtechceu.gtceu.data.recipe.misc;
 
 import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.common.recipe.DimensionCondition;
 import net.minecraft.data.recipes.FinishedRecipe;
 
 import java.util.function.Consumer;
@@ -38,5 +39,11 @@ public class SpaceShuttleRecipeLoader {
                 .inputFluids(RocketFuel.getFluid(32000))
                 .addData("satellite_type", "gtceu:dyson_swarm_satellite")
                 .duration(72000).save(provider);
+
+        SPACE_SHUTTLE_RECIPES.recipeBuilder("manned_launch_station")
+                .inputItems(MANNED_ROCKET.asStack())
+                .inputFluids(RocketFuel.getFluid(24000))
+                .addData("satellite_type", "gtceu:manned_rocket")
+                .duration(36000).save(provider);
     }
 }

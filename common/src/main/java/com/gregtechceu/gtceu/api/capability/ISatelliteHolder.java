@@ -21,11 +21,19 @@ public interface ISatelliteHolder {
 
     /**
      * @param type satellite type
-     * @return satellites of type {@code clazz}
+     * @return satellites of type {@code type}
      */
     @SuppressWarnings("unchecked")
     default <T extends Satellite> List<T> getSatellitesOfType(SatelliteType<T> type) {
         return (List<T>) getSatellites().stream().filter(obj -> obj.getType() == type).toList();
+    }
+
+    /**
+     * @param type satellite type
+     * @return amount of satellites of type {@code type}
+     */
+    default <T extends Satellite> int getSatelliteCount(SatelliteType<T> type) {
+        return getSatellites().stream().filter(obj -> obj.getType() == type).mapToInt(obj -> 1).sum();
     }
 
     /**

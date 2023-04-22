@@ -35,7 +35,7 @@ public class GpsSatellite extends Satellite {
 
     @Override
     public void tickSatellite(Level level) {
-        if (jammed) return;
+        if (isNonWorking()) return;
         Vec2 pos = this.data.locationInWorld();
         var set = level.getEntities(null, AABB.ofSize(new Vec3(pos.x, level.getSeaLevel(), pos.y), this.data.range(), 100, this.data.range())).stream().filter(ent -> ((IGpsTracked)ent).isGpsTracked()).collect(Collectors.toSet());
         lastTrackedEntities.removeAll(set);

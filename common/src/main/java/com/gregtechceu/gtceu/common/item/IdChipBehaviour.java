@@ -3,10 +3,12 @@ package com.gregtechceu.gtceu.common.item;
 import com.gregtechceu.gtceu.api.capability.GTCapabilityHelper;
 import com.gregtechceu.gtceu.api.item.component.IAddInformation;
 import com.gregtechceu.gtceu.api.item.component.IInteractionItem;
+import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class IdChipBehaviour implements IInteractionItem, IAddInformation {
 
-    public static final int ID_MAX = Integer.MAX_VALUE;
+    public static final int ID_MAX = 31, ID_EMPTY = -1;
 
 
     public static ItemStack stack(int configuration) {
@@ -42,22 +44,22 @@ public class IdChipBehaviour implements IInteractionItem, IAddInformation {
     }
 
     public static int getCircuitId(ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("Id")) {
+        if (stack != ItemStack.EMPTY && stack.hasTag() && stack.getTag().contains("Id", Tag.TAG_INT)) {
             return stack.getTag().getInt("Id");
         }
 
-        return -1;
+        return ID_EMPTY;
     }
 
     public static void assignId(Level level, ItemStack stack) {
-        setCircuitId(stack, GTCapabilityHelper.getSpaceStations(level).getFreeStationId());
+        setCircuitId(stack, GTCapabilityHelper.getSpaceStations((ServerLevel) level).getFreeStationId());
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Item item, Level level, Player player, InteractionHand usedHand) {
         ItemStack itemStack = player.getItemInHand(usedHand);
         if (!level.isClientSide && !itemStack.getOrCreateTag().contains("Id", Tag.TAG_INT) && player.isCrouching()) {
-            assignId(level, itemStack);
+            assignId(level.getServer().getLevel(GTDimensionTypes.SPACE_LEVEL), itemStack);
             return InteractionResultHolder.consume(itemStack);
         }
         return InteractionResultHolder.pass(itemStack);
@@ -68,8 +70,8 @@ public class IdChipBehaviour implements IInteractionItem, IAddInformation {
         int id = getCircuitId(stack);
         if (id != -1) {
             tooltipComponents.add(Component.translatable("metaitem.id_circuit.id", id));
-            if (level != null) {
-                Vec2 pos = GTCapabilityHelper.getSpaceStations(level).getStationPos(id);
+            if (level != null && !level.isClientSide) {
+                Vec2 pos = GTCapabilityHelper.getSpaceStations(((ServerLevel) level).getServer().getLevel(GTDimensionTypes.SPACE_LEVEL)).getStationPos(id);
                 tooltipComponents.add(Component.translatable("metaitem.id_circuit.pos", pos.x, pos.y));
             }
         }

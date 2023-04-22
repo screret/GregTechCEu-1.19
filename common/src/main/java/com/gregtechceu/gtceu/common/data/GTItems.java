@@ -1163,6 +1163,8 @@ public class GTItems {
     public static ItemEntry<Item> DYSON_SWARM_SATELLITE = REGISTRATE.item("dyson_swarm_satellite", Item::new).tag(CustomTags.SATELLITES).properties(p -> p.rarity(Rarity.UNCOMMON).stacksTo(16)).register();
 
     public static ItemEntry<Item> SATELLITE_ROCKET = REGISTRATE.item("satellite_rocket", Item::new).properties(p -> p.rarity(Rarity.RARE).stacksTo(1).fireResistant()).register();
+    public static ItemEntry<Item> MANNED_ROCKET = REGISTRATE.item("manned_rocket", Item::new).properties(p -> p.rarity(Rarity.RARE).stacksTo(1).fireResistant()).register();
+    public static ItemEntry<Item> SPACE_FABRIC = REGISTRATE.item("space_fabric", Item::new).properties(p -> p.fireResistant()).register();
 
 
     public static void init() {
