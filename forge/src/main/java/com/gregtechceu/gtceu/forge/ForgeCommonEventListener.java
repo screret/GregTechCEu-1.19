@@ -12,6 +12,7 @@ import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.common.ServerCommands;
 import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
 import com.gregtechceu.gtceu.data.loader.forge.OreDataLoaderImpl;
+import com.gregtechceu.gtceu.common.item.armor.forge.SpaceSuitArmorItemImpl;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -58,6 +59,15 @@ public class ForgeCommonEventListener {
                 @Override
                 public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
                     return drumMachineItem.getCapability(itemStack, capability);
+                }
+            });
+        }
+        if (event.getObject().getItem() instanceof SpaceSuitArmorItemImpl spaceSuitArmorItem) {
+            final ItemStack itemStack = event.getObject();
+            event.addCapability(GTCEu.id("fluid"), new ICapabilityProvider() {
+                @Override
+                public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
+                    return spaceSuitArmorItem.getCapability(itemStack, capability);
                 }
             });
         }

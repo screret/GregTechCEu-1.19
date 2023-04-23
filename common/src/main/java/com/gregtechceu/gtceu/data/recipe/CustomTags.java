@@ -49,8 +49,12 @@ public class CustomTags {
 
     public static final TagKey<Item> SATELLITES = TagUtil.createModItemTag("satellites");
     public static final TagKey<Item> OXYGENATED_ARMOR = TagUtil.createModItemTag("oxygenated_armor");
+    public static final TagKey<Item> FREEZE_RESISTANT = TagUtil.createModItemTag("freeze_resistant");
+    public static final TagKey<Item> HEAT_RESISTANT = TagUtil.createModItemTag("heat_resistant");
 
     public static final TagKey<Block> INFINIBURN_SPACE = TagUtil.createModBlockTag("infiniburn_space");
+    public static final TagKey<Block> BLOCKS_FLOOD_FILL = TagUtil.createModBlockTag("blocks_flood_fill");
+    public static final TagKey<Block> PASSES_FLOOD_FILL = TagUtil.createModBlockTag("passes_flood_fill");
 
 
     // Platform-dependent tags

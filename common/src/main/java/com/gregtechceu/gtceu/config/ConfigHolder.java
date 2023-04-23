@@ -212,7 +212,10 @@ public class ConfigHolder {
     public static class ServerConfigs {
         public boolean enableOxygen = true;
         public float oxygenDamage = 1.0F;
+        public float heatDamage = 2.0F;
+        public float freezeDamage = 2.0F;
         public int maxOxygenatedBlockChecks = 128;
+        public float spaceTemperature = -270.0F;
     }
 
 }

@@ -26,6 +26,7 @@ import com.gregtechceu.gtceu.api.item.tool.MaterialToolTier;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.data.tag.TagUtil;
+import com.gregtechceu.gtceu.common.item.armor.SpaceSuitArmorItem;
 import com.gregtechceu.gtceu.data.lang.LangHandler;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.lowdragmc.lowdraglib.side.fluid.FluidHelper;
@@ -46,6 +47,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -1166,6 +1168,10 @@ public class GTItems {
     public static ItemEntry<Item> MANNED_ROCKET = REGISTRATE.item("manned_rocket", Item::new).properties(p -> p.rarity(Rarity.RARE).stacksTo(1).fireResistant()).register();
     public static ItemEntry<Item> SPACE_FABRIC = REGISTRATE.item("space_fabric", Item::new).properties(p -> p.fireResistant()).register();
 
+    public static ItemEntry<SpaceSuitArmorItem> SPACE_SUIT_HELMET = REGISTRATE.item("space_helmet", properties -> new SpaceSuitArmorItem(EquipmentSlot.HEAD, properties)).properties(p -> p.fireResistant()).register();
+    public static ItemEntry<SpaceSuitArmorItem> SPACE_SUIT_CHEST = REGISTRATE.item("space_chestplate", properties -> new SpaceSuitArmorItem(EquipmentSlot.CHEST, properties)).properties(p -> p.fireResistant()).register();
+    public static ItemEntry<SpaceSuitArmorItem> SPACE_SUIT_LEGS = REGISTRATE.item("space_leggings", properties -> new SpaceSuitArmorItem(EquipmentSlot.LEGS, properties)).properties(p -> p.fireResistant()).register();
+    public static ItemEntry<SpaceSuitArmorItem> SPACE_SUIT_BOOTS = REGISTRATE.item("space_boots", properties -> new SpaceSuitArmorItem(EquipmentSlot.FEET, properties)).properties(p -> p.fireResistant()).register();
 
     public static void init() {
         generateMaterialItems();

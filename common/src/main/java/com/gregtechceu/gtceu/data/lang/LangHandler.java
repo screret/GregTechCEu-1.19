@@ -100,6 +100,7 @@ public class LangHandler {
         multilineLang(provider, "gtceu.multiblock.primitive_water_pump.extra2", "Hatch Multipliers:\n  Pump Hatch: 1x\n  ULV Output Hatch: 2x\n  LV Output Hatch: 4x\n\nWhile raining in the Pump's Biome, the total water production will be increased by 50%%.");
         provider.add("gtceu.multiblock.processing_array.description", "The Processing Array combines up to 16 single block machine(s) in a single multiblock, effectively easing automation.");
         provider.add("gtceu.multiblock.advanced_processing_array.description", "The Processing Array combines up to 64 single block machine(s) in a single multiblock, effectively easing automation.");
+        multilineLang(provider, "gtceu.multiblock.space_shuttle.launch", "Travel to selected Space Station\n§cRequires ID Chip!");
         provider.add("item.invalid.name", "Invalid item");
         provider.add("fluid.empty", "Empty");
         provider.add("gtceu.tooltip.hold_shift", "Hold SHIFT for more info");

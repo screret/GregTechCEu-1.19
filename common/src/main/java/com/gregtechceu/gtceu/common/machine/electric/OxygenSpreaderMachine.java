@@ -1,29 +1,27 @@
 package com.gregtechceu.gtceu.common.machine.electric;
 
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
-import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
-import com.gregtechceu.gtceu.api.machine.TieredEnergyMachine;
-import com.gregtechceu.gtceu.api.machine.WorkableTieredMachine;
 import com.gregtechceu.gtceu.common.entity.data.EntityOxygenSystem;
 import com.gregtechceu.gtceu.utils.FloodFiller3D;
+import com.lowdragmc.lowdraglib.side.fluid.FluidHelper;
 import com.lowdragmc.lowdraglib.side.fluid.FluidStack;
-import com.lowdragmc.lowdraglib.utils.Vector3;
 import com.mojang.math.Vector3f;
 import it.unimi.dsi.fastutil.ints.Int2LongFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.material.Fluids;
 
 import java.util.Set;
 
 public class OxygenSpreaderMachine extends SimpleTieredMachine {
 
-    public OxygenSpreaderMachine(IMachineBlockEntity holder, int tier, Int2LongFunction tankScalingFunction, Object... args) {
-        super(holder, tier, tankScalingFunction, args);
+    public static long tankScalingFunction(int tier) {
+        return tier * 4 * FluidHelper.getBucket();
+    }
+
+    public OxygenSpreaderMachine(IMachineBlockEntity holder, int tier, Object... args) {
+        super(holder, tier, OxygenSpreaderMachine::tankScalingFunction, args);
     }
 
     @Override
@@ -33,11 +31,11 @@ public class OxygenSpreaderMachine extends SimpleTieredMachine {
     }
 
     public boolean canDistribute(int oxygenBlocks) {
-        return ((FluidStack)recipeLogic.lastRecipe.getInputContents(FluidRecipeCapability.CAP).get(0).content).getAmount() / 1000 >= oxygenBlocks;
+        return ((FluidStack)recipeLogic.lastRecipe.getInputContents(FluidRecipeCapability.CAP).get(0).content).getAmount() / FluidHelper.getBucket() >= oxygenBlocks;
     }
 
     public void runAlgorithm() {
-        Set<BlockPos> positions = FloodFiller3D.run(getLevel(), getPos());
+        Set<BlockPos> positions = FloodFiller3D.run(getLevel(), getPos(), getFrontFacing());
 
         if (this.canDistribute(positions.size())) {
             EntityOxygenSystem.setEntry(this.getLevel(), this.getPos(), positions);

@@ -3,11 +3,8 @@ package com.gregtechceu.gtceu.common.entity.data;
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
 import com.gregtechceu.gtceu.GTCEu;
-import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.data.damagesource.DamageSources;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
-import com.gregtechceu.gtceu.common.item.armor.SpaceSuitArmor;
+import com.gregtechceu.gtceu.common.item.armor.SpaceSuitArmorItem;
 import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import net.minecraft.core.BlockPos;
@@ -24,10 +21,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.StreamSupport;
 
+/**
+ * Proudly copied from <a href="https://github.com/terrarium-earth/Ad-Astra/blob/1.19/common/src/main/java/earth/terrarium/ad_astra/common/entity/system/EntityOxygenSystem.java">Ad Astra</a>
+ */
 public class EntityOxygenSystem {
 
     public static final Table<ResourceKey<Level>, BlockPos, Set<BlockPos>> OXYGEN_LOCATIONS = Tables.newCustomTable(new HashMap<>(), HashMap::new);
@@ -75,7 +74,7 @@ public class EntityOxygenSystem {
         }
 
         boolean entityHasOxygen = entityHasOxygen(level, entity);
-        boolean hasOxygenatedSpaceSuit = SpaceSuitArmor.hasOxygenatedSpaceSuit(entity) && SpaceSuitArmor.hasFullSet(entity);
+        boolean hasOxygenatedSpaceSuit = SpaceSuitArmorItem.hasOxygenatedSpaceSuit(entity) && SpaceSuitArmorItem.hasFullSet(entity);
 
         if (entityHasOxygen && hasOxygenatedSpaceSuit && entity.isUnderWater() && !entity.canBreatheUnderwater() && !entity.hasEffect(MobEffects.WATER_BREATHING)) {
             consumeOxygen(entity);
@@ -124,12 +123,12 @@ public class EntityOxygenSystem {
 
                 Block block = state.getBlock();
                 if (block instanceof CandleCakeBlock) {
-                    level.setBlockAndUpdate(pos, block.defaultBlockState().setValue(CandleCakeBlock.LIT, false));
+                    level.setBlockAndUpdate(pos, state.setValue(CandleCakeBlock.LIT, false));
                     continue;
                 }
 
                 if (block instanceof CandleBlock) {
-                    level.setBlockAndUpdate(pos, block.defaultBlockState().setValue(CandleBlock.CANDLES, state.getValue(CandleBlock.CANDLES)).setValue(CandleBlock.LIT, false));
+                    level.setBlockAndUpdate(pos, state.setValue(CandleBlock.LIT, false));
                     continue;
                 }
 
@@ -139,7 +138,7 @@ public class EntityOxygenSystem {
                 }
 
                 if (block instanceof CampfireBlock) {
-                    level.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, false).setValue(CampfireBlock.FACING, state.getValue(CampfireBlock.FACING)));
+                    level.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, false));
                     continue;
                 }
 
@@ -159,7 +158,13 @@ public class EntityOxygenSystem {
                 }
 
                 if (state.getFluidState().is(FluidTags.WATER)) {
-                    level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+                    if (state.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                        level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.WATERLOGGED, false));
+                    } else {
+                        // maybe check "planet" temperature in the future if we ever add those?
+                        // and then turn into ice instead if temp > 0
+                        level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                    }
                 }
             }
         } catch (UnsupportedOperationException e) {
@@ -171,7 +176,7 @@ public class EntityOxygenSystem {
     private static void consumeOxygen(LivingEntity entity) {
         if (entity.getLevel().getGameTime() % 3 == 0) {
             entity.setAirSupply(Math.min(entity.getMaxAirSupply(), entity.getAirSupply() + 4 * 10));
-            SpaceSuitArmor.consumeSpaceSuitOxygen(entity, 1);
+            SpaceSuitArmorItem.consumeSpaceSuitOxygen(entity, 1);
         }
     }
 
@@ -200,11 +205,9 @@ public class EntityOxygenSystem {
     }
 
     public static boolean inDistributorBubble(Level level, BlockPos pos) {
-        for (var entry : OXYGEN_LOCATIONS.rowMap().entrySet()) {
-            if (level.dimension().equals(entry.getKey())) {
-                if (entry.getValue().containsValue(pos)) {
-                    return true;
-                }
+        for (var entry : OXYGEN_LOCATIONS.row(level.dimension()).values()) {
+            if (entry.contains(pos)) {
+                return true;
             }
         }
         return false;

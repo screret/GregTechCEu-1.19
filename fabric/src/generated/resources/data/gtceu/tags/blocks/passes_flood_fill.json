@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "gtceu:oxygen_spreader.iv",
+    "gtceu:oxygen_spreader.luv",
+    "gtceu:oxygen_spreader.zpm",
+    "gtceu:oxygen_spreader.uv",
+    "gtceu:oxygen_spreader.uhv",
+    {
+      "id": "#minecraft:fences",
+      "required": false
+    },
+    "minecraft:iron_bars",
+    "minecraft:tnt"
+  ]
+}

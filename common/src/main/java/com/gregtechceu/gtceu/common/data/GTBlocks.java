@@ -713,6 +713,20 @@ public class GTBlocks {
             .register();
 
 
+    public static final BlockEntry<DoorBlock> AIRLOCK_DOOR = REGISTRATE
+            .block("airlock_door", DoorBlock::new)
+            .initialProperties(() -> Blocks.IRON_BLOCK)
+            .lang("Airlock Door")
+            .properties(p -> p.strength(4.0F, 6.0F))
+            .tag(GTToolType.WRENCH.harvestTag, BlockTags.MINEABLE_WITH_PICKAXE, CustomTags.BLOCKS_FLOOD_FILL)
+            .blockstate((ctx, prov) -> prov.doorBlock(ctx.getEntry(), GTCEu.id("block/airlock_door_bottom"), GTCEu.id("block/airlock_door_top")))
+            .item()
+            .tag(ItemTags.DOORS)
+            .defaultModel()
+            .build()
+            .register();
+
+
     public static <P, T extends Block, S2 extends BlockBuilder<T, P>> NonNullFunction<S2, S2> unificationBlock(@Nonnull TagPrefix tagPrefix, @Nonnull Material mat) {
         return builder -> {
             builder.onRegister(block -> ChemicalHelper.registerUnificationItems(tagPrefix, mat, block));

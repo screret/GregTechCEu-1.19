@@ -27,6 +27,7 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,7 +56,7 @@ public class SpaceShuttleMachine extends WorkableElectricMultiblockMachine {
 
     @Override
     public boolean isWorkingEnabled() {
-        return super.isWorkingEnabled() && !inventory.getStackInSlot(0).isEmpty();
+        return super.isWorkingEnabled();
     }
 
     @Override
@@ -74,11 +75,15 @@ public class SpaceShuttleMachine extends WorkableElectricMultiblockMachine {
     }
 
     protected void updatedInventory() {
-        var stack = inventory.storage.getStackInSlot(0);
-        if (inventory.storage.getStackInSlot(0).is(GTItems.KEYCARD.get())) {
+        var stack = inventory.getStackInSlot(0);
+        if (GTItems.KEYCARD.isIn(stack)) {
             this.currentSatelliteOwnerUUID = KeyCardBehaviour.getOwner(stack);
-        } else {
+            this.recipeLogic.setWorkingEnabled(true);
+        } else if (GTItems.ID_CHIP.isIn(stack)) {
             this.currentSatelliteOwnerUUID = null;
+            this.recipeLogic.setWorkingEnabled(true);
+        } else {
+            this.recipeLogic.setWorkingEnabled(false);
         }
     }
 
@@ -96,8 +101,8 @@ public class SpaceShuttleMachine extends WorkableElectricMultiblockMachine {
             var data = this.recipeLogic.lastRecipe.data;
             var type = data.contains("satellite_type") ? GTRegistries.SATELLITES.get(new ResourceLocation(data.getString("satellite_type"))) : null;
             BlockPos pos = this.getPos();
-            if (!this.getLevel().isClientSide) {
-                GTCapabilityHelper.getSatellites((ServerLevel) this.getLevel()).addSatellite(data == null ? null : type.getFactory().create(type, new SatelliteData(new Vec2(pos.getX(), pos.getZ()), this.getTier() * SATELLITE_RANGE_MULTIPLIER, currentSatelliteOwnerUUID), this.getLevel().dimension()));
+            if (!this.getLevel().isClientSide && type != null) {
+                GTCapabilityHelper.getSatellites((ServerLevel) this.getLevel()).addSatellite(type.getFactory().create(type, new SatelliteData(new Vec2(pos.getX(), pos.getZ()), this.getTier() * SATELLITE_RANGE_MULTIPLIER, currentSatelliteOwnerUUID), this.getLevel().dimension()));
             }
         }
     }
@@ -107,7 +112,7 @@ public class SpaceShuttleMachine extends WorkableElectricMultiblockMachine {
     private void launchPlayerToStation(ClickData data, Player player) {
         Level level = player.getLevel();
         var recipe = GTRecipeTypes.SPACE_SHUTTLE_RECIPES.getRecipe(level.getRecipeManager(), mannedLaunchRecipeId);
-        if (!level.isClientSide && recipe.matchRecipe(this)) {
+        if (!level.isClientSide && recipe.matchRecipe(this) && GTItems.ID_CHIP.isIn(inventory.getStackInSlot(0))) {
             this.recipeLogic.setupRecipe(recipe);
             int stationId = IdChipBehaviour.getCircuitId(inventory.getStackInSlot(0));
             if (stationId != IdChipBehaviour.ID_EMPTY) {
@@ -134,7 +139,7 @@ public class SpaceShuttleMachine extends WorkableElectricMultiblockMachine {
         return new ModularUI(190, 216, this, player)
                 .background(GuiTextures.BACKGROUND)
                 .widget(new SlotWidget(inventory, 0, 168, 107).setBackgroundTexture(new GuiTextureGroup(GuiTextures.SLOT)))
-                .widget(new ButtonWidget(168, 87, 18, 18, GuiTextures.BUTTON_LAUNCH_ROCKET, data -> launchPlayerToStation(data, player)))
+                .widget(new ButtonWidget(168, 87, 18, 18, GuiTextures.BUTTON_LAUNCH_ROCKET, data -> launchPlayerToStation(data, player)).setHoverTooltips(Component.translatable("gtceu.multiblock.space_shuttle.launch")))
                 .widget(screen)
                 .widget(UITemplate.bindPlayerInventory(player.getInventory(), GuiTextures.SLOT, 7, 134, true));
     }

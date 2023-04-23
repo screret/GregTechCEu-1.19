@@ -1,12 +1,17 @@
 package com.gregtechceu.gtceu.core.mixins;
 
 import com.gregtechceu.gtceu.api.capability.IGpsTracked;
+import com.gregtechceu.gtceu.common.data.GTDimensionTypes;
+import com.gregtechceu.gtceu.common.entity.data.EntityOxygenSystem;
+import com.gregtechceu.gtceu.common.entity.data.EntityTemperatureSystem;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,7 +43,19 @@ public abstract class LivingEntityMixin extends Entity implements IGpsTracked {
         LivingEntity entity = (LivingEntity) (Object) this;
         Level level = entity.level;
         if (!level.isClientSide) {
+            if (level.getGameTime() % 10 == 0) {
+                if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) {
+                    return;
+                }
 
+                EntityOxygenSystem.oxygenTick(entity, (ServerLevel) level);
+
+                if (level.dimension() != GTDimensionTypes.SPACE_LEVEL) {
+                    return;
+                }
+
+                EntityTemperatureSystem.temperatureTick(entity, (ServerLevel) level);
+            }
         }
     }
 }

@@ -1,25 +1,27 @@
 package com.gregtechceu.gtceu.utils;
 
 import com.gregtechceu.gtceu.config.ConfigHolder;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.content.curiosities.deco.SlidingDoorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.Set;
 
+/**
+ * FloodFiller3D borrowed from Ad Astra.
+ * <a href="https://github.com/terrarium-earth/Ad-Astra/blob/1.19/common/src/main/java/earth/terrarium/ad_astra/common/util/algorithm/FloodFiller3D.java">github link</a>
+ */
 public class FloodFiller3D {
-    public static Set<BlockPos> run(Level level, BlockPos start) {
+    public static Set<BlockPos> run(Level level, BlockPos start, Direction startFacing) {
         Set<BlockPos> positions = new LinkedHashSet<>();
         Set<Pair<BlockPos, Direction>> queue = new LinkedHashSet<>();
-        queue.add(Pair.of(start, Direction.UP));
+        queue.add(Pair.of(start, startFacing));
 
         while (!queue.isEmpty()) {
             if (positions.size() >= ConfigHolder.server.maxOxygenatedBlockChecks) break;
@@ -34,8 +36,9 @@ public class FloodFiller3D {
             /*if (runAdditionalChecks(level, state, pos)) {
                 continue;
             } else */{
+                if (state.is(CustomTags.BLOCKS_FLOOD_FILL)) continue;
                 VoxelShape collisionShape = state.getCollisionShape(level, pos);
-                if (!state.isAir() && !collisionShape.isEmpty() && isSideSolid(collisionShape, pair.getSecond(), state) && (isFaceSturdy(collisionShape, pair.getSecond(), state) || isFaceSturdy(collisionShape, pair.getSecond().getOpposite(), state))) {
+                if (!state.isAir() && !state.is(CustomTags.PASSES_FLOOD_FILL) && !collisionShape.isEmpty() && isSideSolid(collisionShape, pair.getSecond(), state) && (isFaceSturdy(collisionShape, pair.getSecond(), state) || isFaceSturdy(collisionShape, pair.getSecond().getOpposite(), state))) {
                     continue;
                 }
             }

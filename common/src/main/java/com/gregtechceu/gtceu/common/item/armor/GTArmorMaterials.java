@@ -7,7 +7,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
@@ -29,7 +28,6 @@ public enum GTArmorMaterials implements ArmorMaterial {
     private final float toughness;
     @Getter
     private final float knockbackResistance;
-    @Getter
     private final LazyLoadedValue<Ingredient> repairIngredient;
 
     private GTArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
@@ -49,5 +47,9 @@ public enum GTArmorMaterials implements ArmorMaterial {
 
     public int getDefenseForSlot(EquipmentSlot slot) {
         return this.slotProtections[slot.getIndex()];
+    }
+
+    public Ingredient getRepairIngredient() {
+        return repairIngredient.get();
     }
 }
