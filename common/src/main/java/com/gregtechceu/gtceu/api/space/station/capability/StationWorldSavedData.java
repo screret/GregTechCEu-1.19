@@ -86,10 +86,11 @@ public class StationWorldSavedData extends SavedData implements ISpaceStationHol
     }
 
     public void load(CompoundTag arg) {
-        for (String name : arg.getCompound("stations").getAllKeys()) {
-            CompoundTag tag = arg.getCompound(name);
-            Vec2 pos = new Vec2(tag.getInt("x"), tag.getInt("z"));
+        CompoundTag stationsTag = arg.getCompound("stations");
+        for (String name : stationsTag.getAllKeys()) {
+            CompoundTag tag = stationsTag.getCompound(name);
             int id = Integer.parseInt(name);
+            Vec2 pos = new Vec2(tag.getInt("x"), tag.getInt("z"));
             stations.put(id, pos);
             freeStationPositions.remove(id);
         }
