@@ -279,6 +279,7 @@ public class GTMachines {
                     .rotationState(RotationState.NON_Y_AXIS)
                     .hasTESR(true)
                     .renderer(() -> new TieredHullMachineRenderer(tier, GTCEu.id("block/machine/pump_machine")))
+                    .recipeType(GTRecipeTypes.OXYGEN_SPREADER_RECIPES)
                     .tooltips(workableTiered(tier, GTValues.V[tier], GTValues.V[tier] * 64, GTRecipeTypes.OXYGEN_SPREADER_RECIPES, OxygenSpreaderMachine.tankScalingFunction(tier), true))
                     .blockBuilder(block -> block.tag(CustomTags.PASSES_FLOOD_FILL))
                     .register(),

@@ -43,8 +43,8 @@ public class SpaceSuitArmorItem extends ArmorItem {
      */
     public static boolean hasOxygenatedSpaceSuit(LivingEntity entity) {
         ItemStack chest = entity.getItemBySlot(EquipmentSlot.CHEST);
-        var fluid = FluidTransferHelper.getFluidTransfer(new ItemStackTransfer(chest), 1);
-        if (chest.getItem() instanceof SpaceSuitArmorItem) {
+        var fluid = FluidTransferHelper.getFluidTransfer(new ItemStackTransfer(chest), 0);
+        if (chest.getItem() instanceof SpaceSuitArmorItem && fluid != null) {
             return fluid.getFluidInTank(0).getAmount() > 0;
         }
 
