@@ -15,7 +15,7 @@ public class ChunkGeneratorMixin {
 
     @Inject(method = "applyBiomeDecoration", at = @At("HEAD"))
     private void gtceu$applyBiomeDecoration$addVoidOres(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager, CallbackInfo ci) {
-        var savedData = VoidOreSavedData.getOrCreate(level.getLevel());
-        savedData.generate(chunk.getPos(), level.getRandom());
+        //var savedData = VoidOreSavedData.getOrCreate(level.getLevel());
+        //savedData.generate(chunk.getPos(), level.getRandom());
     }
 }

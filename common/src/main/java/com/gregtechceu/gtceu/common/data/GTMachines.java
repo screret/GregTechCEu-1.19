@@ -27,10 +27,7 @@ import com.gregtechceu.gtceu.client.renderer.block.CTMModelRenderer;
 import com.gregtechceu.gtceu.client.renderer.machine.*;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.block.CoilBlock;
-import com.gregtechceu.gtceu.common.machine.electric.BatteryBufferMachine;
-import com.gregtechceu.gtceu.common.machine.electric.OxygenSpreaderMachine;
-import com.gregtechceu.gtceu.common.machine.electric.PumpMachine;
-import com.gregtechceu.gtceu.common.machine.electric.TransformerMachine;
+import com.gregtechceu.gtceu.common.machine.electric.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.CrackerMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.ElectricBlastFurnaceMachine;
 import com.gregtechceu.gtceu.common.machine.multiblock.electric.SatelliteLaunchSystemMachine;
@@ -278,7 +275,18 @@ public class GTMachines {
             (tier, builder) -> builder
                     .rotationState(RotationState.NON_Y_AXIS)
                     .hasTESR(true)
-                    .renderer(() -> new TieredHullMachineRenderer(tier, GTCEu.id("block/machine/pump_machine")))
+                    .renderer(() -> new TieredHullMachineRenderer(tier, GTCEu.id("block/machine/oxygen_spreader_machine")))
+                    .recipeType(GTRecipeTypes.OXYGEN_SPREADER_RECIPES)
+                    .tooltips(workableTiered(tier, GTValues.V[tier], GTValues.V[tier] * 64, GTRecipeTypes.OXYGEN_SPREADER_RECIPES, OxygenSpreaderMachine.tankScalingFunction(tier), true))
+                    .blockBuilder(block -> block.tag(CustomTags.PASSES_FLOOD_FILL))
+                    .register(),
+            HIGH_TIERS);
+
+    public final static MachineDefinition[] BEDROCK_ORE_MINER = registerTieredMachines("bedrock_ore_miner", VoidOreMinerMachine::new,
+            (tier, builder) -> builder
+                    .rotationState(RotationState.NON_Y_AXIS)
+                    .hasTESR(true)
+                    .renderer(() -> new TieredHullMachineRenderer(tier, GTCEu.id("block/machine/bedrock_ore_miner_machine")))
                     .recipeType(GTRecipeTypes.OXYGEN_SPREADER_RECIPES)
                     .tooltips(workableTiered(tier, GTValues.V[tier], GTValues.V[tier] * 64, GTRecipeTypes.OXYGEN_SPREADER_RECIPES, OxygenSpreaderMachine.tankScalingFunction(tier), true))
                     .blockBuilder(block -> block.tag(CustomTags.PASSES_FLOOD_FILL))
